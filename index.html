@@ -5,198 +5,211 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#2563eb">
 <title>برنامه و تکالیف هفتگی</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<link href="https://www.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#f4f6fb; --card:#ffffff; --ink:#1e2430; --muted:#6b7280;
-  --brand:#3b82f6; --brand-dark:#2563eb; --green:#16a34a; --green-soft:#dcfce7;
-  --amber:#d97706; --red:#dc2626; --line:#e5e7eb; --chip:#eef2ff;
-}
-*{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
-body{
-  font-family:'Vazirmatn',Tahoma,sans-serif; background:var(--bg); color:var(--ink);
-  padding:22px 16px 60px; line-height:1.7;
-}
-.wrap{max-width:1080px; margin:0 auto;}
-header{
-  background:linear-gradient(135deg,#2563eb,#4f46e5); color:#fff;
-  border-radius:18px; padding:26px 28px; margin-bottom:22px;
-  box-shadow:0 10px 30px rgba(37,99,235,.25);
-}
-header h1{font-size:1.55rem; font-weight:700; margin-bottom:6px;}
-header p{opacity:.92; font-size:.95rem;}
-header .today{font-size:.85rem; opacity:.85; margin-top:8px;}
-.account-row{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,.25);}
-.account-info{display:flex; align-items:center; gap:10px; font-size:.85rem;}
-.account-info .avatar{width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:1rem;}
-.sync-state{font-size:.78rem; opacity:.9; display:flex; align-items:center; gap:6px;}
-.sync-dot{width:8px; height:8px; border-radius:50%; background:#4ade80; display:inline-block;}
-.sync-state.saving .sync-dot{background:#fbbf24; animation:pulse 1s infinite;}
-.sync-state.error .sync-dot{background:#f87171;}
-@keyframes pulse{50%{opacity:.3;}}
-.btn-logout{background:rgba(255,255,255,.15); color:#fff; border:1px solid rgba(255,255,255,.4); border-radius:8px; padding:5px 14px; font-size:.8rem; font-weight:500; cursor:pointer;}
-.btn-logout:hover{background:rgba(255,255,255,.28);}
-.login-wrap{display:flex; align-items:center; justify-content:center; min-height:60vh;}
-.login-card{
-  background:var(--card); border:1px solid var(--line); border-radius:18px;
-  padding:44px 36px; max-width:440px; width:100%; text-align:center;
-  box-shadow:0 10px 34px rgba(15,23,42,.08);
-}
-.login-logo{font-size:3rem; margin-bottom:10px;}
-.login-card h2{font-size:1.25rem; font-weight:700; margin-bottom:8px;}
-.login-card p{color:var(--muted); font-size:.9rem; margin-bottom:24px;}
-.btn-google{
-  display:inline-flex; align-items:center; gap:10px; background:#fff; color:var(--ink);
-  border:1px solid var(--line); border-radius:10px; padding:12px 22px; font-size:.95rem; font-weight:600;
-  cursor:pointer; box-shadow:0 2px 8px rgba(15,23,42,.06); transition:.15s;
-}
-.btn-google:hover{box-shadow:0 4px 14px rgba(15,23,42,.12);}
-.btn-google svg{width:20px; height:20px;}
-.login-note{margin-top:18px; font-size:.75rem; color:var(--muted);}
-.card{
-  background:var(--card); border:1px solid var(--line); border-radius:16px;
-  padding:20px 22px; margin-bottom:22px; box-shadow:0 2px 10px rgba(15,23,42,.04);
-}
-.card h2{font-size:1.1rem; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
-.card h2::before{content:""; width:8px; height:20px; border-radius:4px; background:var(--brand); display:inline-block;}
-.progress-box{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
-.progress-track{flex:1; min-width:220px; height:16px; background:#e9eef5; border-radius:99px; overflow:hidden;}
-.progress-fill{height:100%; width:0%; background:linear-gradient(90deg,#22c55e,#16a34a); border-radius:99px; transition:width .4s ease;}
-.progress-num{font-weight:700; white-space:nowrap; font-size:.95rem;}
-.progress-num small{color:var(--muted); font-weight:400;}
-.add-form{display:grid; grid-template-columns:2fr 1fr 1fr 1fr auto; gap:10px; margin-bottom:16px;}
-@media(max-width:760px){ .add-form{grid-template-columns:1fr 1fr;} .add-form .full{grid-column:1/-1;} }
-input,select,button{
-  font-family:inherit; font-size:.92rem; border:1px solid var(--line);
-  border-radius:10px; padding:9px 12px; color:var(--ink); background:#fff; outline:none;
-}
-input:focus,select:focus{border-color:var(--brand); box-shadow:0 0 0 3px rgba(59,130,246,.15);}
-button{cursor:pointer; border:none;}
-.btn-add{background:var(--brand); color:#fff; font-weight:600; padding:9px 18px; border-radius:10px; transition:.15s;}
-.btn-add:hover{background:var(--brand-dark);}
-.filters{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
-.chip{
-  background:var(--chip); color:#3730a3; border-radius:99px; padding:5px 14px;
-  font-size:.85rem; font-weight:500; cursor:pointer; transition:.15s; border:1px solid transparent;
-}
-.chip:hover{background:#e0e7ff;}
-.chip.active{background:var(--brand); color:#fff;}
-.task-list{list-style:none; display:flex; flex-direction:column; gap:10px;}
-.task{
-  display:flex; align-items:center; gap:12px; background:#fbfcfe;
-  border:1px solid var(--line); border-radius:12px; padding:12px 14px; transition:.15s;
-}
-.task:hover{border-color:#c7d2fe; box-shadow:0 2px 8px rgba(15,23,42,.05);}
-.task.done{background:var(--green-soft); border-color:#bbf7d0;}
-.task.done .task-title{text-decoration:line-through; color:var(--muted);}
-.task input[type=checkbox]{ width:22px; height:22px; accent-color:var(--green); cursor:pointer; flex-shrink:0; }
-.task-body{flex:1; min-width:0;}
-.task-title{font-weight:600; font-size:.98rem; word-break:break-word;}
-.task-meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:5px; font-size:.78rem;}
-.tag{border-radius:99px; padding:2px 10px; font-weight:500;}
-.tag.day{background:#e0e7ff; color:#3730a3;}
-.tag.subject{background:#f1f5f9; color:#475569;}
-.tag.p-high{background:#fee2e2; color:#b91c1c;}
-.tag.p-mid{background:#fef3c7; color:#b45309;}
-.tag.p-low{background:#d1fae5; color:#047857;}
-.btn-del{background:#fee2e2; color:#b91c1c; border-radius:8px; padding:6px 10px; font-size:.8rem; flex-shrink:0;}
-.btn-del:hover{background:#fecaca;}
-.empty{color:var(--muted); text-align:center; padding:26px 0; font-size:.92rem;}
-.table-scroll{overflow-x:auto;}
-table{width:100%; border-collapse:collapse; min-width:640px; font-size:.88rem;}
-th,td{border:1px solid var(--line); padding:9px 10px; text-align:center; vertical-align:middle;}
-thead th{background:#eef2ff; color:#3730a3; font-weight:600; white-space:nowrap;}
-tbody th{background:#f8fafc; font-weight:600; white-space:nowrap; width:90px;}
-td{background:#fff; min-width:110px;}
-td textarea{
-  width:100%; min-height:52px; resize:vertical; border:none; background:transparent;
-  font-family:inherit; font-size:.85rem; text-align:center; color:var(--ink); padding:4px;
-}
-td textarea:focus{background:#f8faff; border-radius:6px;}
-tr.today-row th{background:#dbeafe; color:#1d4ed8;}
-tr.today-row th::after{content:" امروز"; font-size:.7rem; font-weight:500; display:block;}
-@media(max-width:720px){
-  body{padding:14px 10px calc(48px + env(safe-area-inset-bottom));}
-  .wrap{max-width:100%;}
-  header{padding:20px 18px; border-radius:14px; margin-bottom:16px;}
-  header h1{font-size:1.25rem;}
-  header p{font-size:.88rem;}
-  .card{padding:16px 14px; margin-bottom:16px; border-radius:14px;}
-  .progress-box{gap:10px;}
-  .progress-num{flex:1 1 100%; order:1; text-align:center;}
-  .progress-track{flex:1 1 100%; order:2; min-width:0;}
-  input,select,textarea{font-size:16px;}
-  .btn-add{width:100%; padding:12px;}
-  .chip{padding:8px 16px;}
-  .task{gap:10px; padding:12px 10px;}
-  .task input[type=checkbox]{width:26px; height:26px;}
-  .btn-del{padding:10px 12px; align-self:center;}
-  .btn-clear{width:100%; padding:12px;}
-  .footer-note{margin-top:10px;}
-  .table-scroll{overflow:visible;}
-  table{min-width:0; border:none;}
-  thead{display:none;}
-  table,tbody,tr,th,td{display:block; width:100%;}
-  tr{border:1px solid var(--line); border-radius:12px; margin-bottom:12px; padding:8px; background:#fff; overflow:hidden;}
-  tbody th{width:auto; background:#eef2ff; color:#3730a3; border-radius:8px; margin-bottom:8px; padding:8px; text-align:center;}
-  td{border:none; border-top:1px dashed var(--line); min-width:0; padding:6px 4px; display:flex; align-items:center; gap:10px;}
-  td:first-of-type{border-top:none;}
-  td::before{content:attr(data-label); flex:0 0 46px; font-size:.85rem; font-weight:600; color:var(--muted);}
-  td textarea{min-height:40px; text-align:right;}
-  tr.today-row{border-color:#93c5fd; box-shadow:0 0 0 2px rgba(59,130,246,.18);}
-}
-@media(max-width:480px){
-  .add-form{grid-template-columns:1fr;}
-  header h1{font-size:1.12rem;}
-  .task-meta{font-size:.75rem;}
-}
-.btn-clear{background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; border-radius:10px; padding:8px 16px; font-size:.85rem; font-weight:500;}
-.btn-clear:hover{background:#fee2e2;}
-.footer-note{text-align:center; color:var(--muted); font-size:.8rem; margin-top:6px;}
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --ink:#1e2430; --muted:#6b7280;
+    --brand:#3b82f6; --brand-dark:#2563eb; --green:#16a34a; --green-soft:#dcfce7;
+    --amber:#d97706; --red:#dc2626; --line:#e5e7eb; --chip:#eef2ff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Vazirmatn',Tahoma,sans-serif; background:var(--bg); color:var(--ink);
+    padding:22px 16px 60px; line-height:1.7;
+  }
+  .wrap{max-width:1080px; margin:0 auto;}
+
+  /* هدر */
+  header{
+    background:linear-gradient(135deg,#2563eb,#4f46e5); color:#fff;
+    border-radius:18px; padding:26px 28px; margin-bottom:22px;
+    box-shadow:0 10px 30px rgba(37,99,235,.25);
+  }
+  header h1{font-size:1.55rem; font-weight:700; margin-bottom:6px;}
+  header p{opacity:.92; font-size:.95rem;}
+  header .today{font-size:.85rem; opacity:.85; margin-top:8px;}
+
+  /* باکس حساب کاربری و وضعیت همگام‌سازی */
+  .account-row{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,.25);}
+  .account-info{display:flex; align-items:center; gap:10px; font-size:.85rem;}
+  .account-info .avatar{width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:1rem;}
+  .sync-state{font-size:.78rem; opacity:.9; display:flex; align-items:center; gap:6px;}
+  .sync-dot{width:8px; height:8px; border-radius:50%; background:#4ade80; display:inline-block;}
+  .sync-state.saving .sync-dot{background:#fbbf24; animation:pulse 1s infinite;}
+  .sync-state.error .sync-dot{background:#f87171;}
+  @keyframes pulse{50%{opacity:.3;}}
+  .btn-logout{background:rgba(255,255,255,.15); color:#fff; border:1px solid rgba(255,255,255,.4); border-radius:8px; padding:5px 14px; font-size:.8rem; font-weight:500; cursor:pointer;}
+  .btn-logout:hover{background:rgba(255,255,255,.28);}
+
+  /* صفحه ورود */
+  .login-wrap{display:flex; align-items:center; justify-content:center; min-height:60vh;}
+  .login-card{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:44px 36px; max-width:440px; width:100%; text-align:center;
+    box-shadow:0 10px 34px rgba(15,23,42,.08);
+  }
+  .login-logo{font-size:3rem; margin-bottom:10px;}
+  .login-card h2{font-size:1.25rem; font-weight:700; margin-bottom:8px;}
+  .login-card p{color:var(--muted); font-size:.9rem; margin-bottom:24px;}
+  .login-card input{width:100%; text-align:center; padding:12px 14px; font-size:1rem; margin-bottom:12px;}
+  .login-card .btn-add{width:100%; padding:12px; font-size:1rem;}
+  .login-error{color:var(--red); font-size:.85rem; min-height:1.3em; margin-bottom:10px;}
+  .login-note{margin-top:18px; font-size:.75rem; color:var(--muted);}
+
+  /* کارت‌ها */
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:20px 22px; margin-bottom:22px; box-shadow:0 2px 10px rgba(15,23,42,.04);
+  }
+  .card h2{font-size:1.1rem; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .card h2::before{content:""; width:8px; height:20px; border-radius:4px; background:var(--brand); display:inline-block;}
+
+  /* نوار پیشرفت */
+  .progress-box{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  .progress-track{flex:1; min-width:220px; height:16px; background:#e9eef5; border-radius:99px; overflow:hidden;}
+  .progress-fill{height:100%; width:0%; background:linear-gradient(90deg,#22c55e,#16a34a); border-radius:99px; transition:width .4s ease;}
+  .progress-num{font-weight:700; white-space:nowrap; font-size:.95rem;}
+  .progress-num small{color:var(--muted); font-weight:400;}
+
+  /* فرم افزودن */
+  .add-form{display:grid; grid-template-columns:2fr 1fr 1fr 1fr auto; gap:10px; margin-bottom:16px;}
+  @media(max-width:760px){ .add-form{grid-template-columns:1fr 1fr;} .add-form .full{grid-column:1/-1;} }
+  input,select,button{
+    font-family:inherit; font-size:.92rem; border:1px solid var(--line);
+    border-radius:10px; padding:9px 12px; color:var(--ink); background:#fff; outline:none;
+  }
+  input:focus,select:focus{border-color:var(--brand); box-shadow:0 0 0 3px rgba(59,130,246,.15);}
+  button{cursor:pointer; border:none;}
+  .btn-add{background:var(--brand); color:#fff; font-weight:600; padding:9px 18px; border-radius:10px; transition:.15s;}
+  .btn-add:hover{background:var(--brand-dark);}
+
+  /* فیلترها */
+  .filters{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
+  .chip{
+    background:var(--chip); color:#3730a3; border-radius:99px; padding:5px 14px;
+    font-size:.85rem; font-weight:500; cursor:pointer; transition:.15s; border:1px solid transparent;
+  }
+  .chip:hover{background:#e0e7ff;}
+  .chip.active{background:var(--brand); color:#fff;}
+
+  /* لیست تکالیف */
+  .task-list{list-style:none; display:flex; flex-direction:column; gap:10px;}
+  .task{
+    display:flex; align-items:center; gap:12px; background:#fbfcfe;
+    border:1px solid var(--line); border-radius:12px; padding:12px 14px; transition:.15s;
+  }
+  .task:hover{border-color:#c7d2fe; box-shadow:0 2px 8px rgba(15,23,42,.05);}
+  .task.done{background:var(--green-soft); border-color:#bbf7d0;}
+  .task.done .task-title{text-decoration:line-through; color:var(--muted);}
+  .task input[type=checkbox]{
+    width:22px; height:22px; accent-color:var(--green); cursor:pointer; flex-shrink:0;
+  }
+  .task-body{flex:1; min-width:0;}
+  .task-title{font-weight:600; font-size:.98rem; word-break:break-word;}
+  .task-meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:5px; font-size:.78rem;}
+  .tag{border-radius:99px; padding:2px 10px; font-weight:500;}
+  .tag.day{background:#e0e7ff; color:#3730a3;}
+  .tag.subject{background:#f1f5f9; color:#475569;}
+  .tag.p-high{background:#fee2e2; color:#b91c1c;}
+  .tag.p-mid{background:#fef3c7; color:#b45309;}
+  .tag.p-low{background:#d1fae5; color:#047857;}
+  .btn-del{background:#fee2e2; color:#b91c1c; border-radius:8px; padding:6px 10px; font-size:.8rem; flex-shrink:0;}
+  .btn-del:hover{background:#fecaca;}
+  .empty{color:var(--muted); text-align:center; padding:26px 0; font-size:.92rem;}
+
+  /* جدول برنامه هفتگی */
+  .table-scroll{overflow-x:auto;}
+  table{width:100%; border-collapse:collapse; min-width:640px; font-size:.88rem;}
+  th,td{border:1px solid var(--line); padding:9px 10px; text-align:center; vertical-align:middle;}
+  thead th{background:#eef2ff; color:#3730a3; font-weight:600; white-space:nowrap;}
+  tbody th{background:#f8fafc; font-weight:600; white-space:nowrap; width:90px;}
+  td{background:#fff; min-width:110px;}
+  td textarea{
+    width:100%; min-height:52px; resize:vertical; border:none; background:transparent;
+    font-family:inherit; font-size:.85rem; text-align:center; color:var(--ink); padding:4px;
+  }
+  td textarea:focus{background:#f8faff; border-radius:6px;}
+  tr.today-row th{background:#dbeafe; color:#1d4ed8;}
+  tr.today-row th::after{content:" امروز"; font-size:.7rem; font-weight:500; display:block;}
+
+  /* موبایل و تبلت */
+  @media(max-width:720px){
+    body{padding:14px 10px calc(48px + env(safe-area-inset-bottom));}
+    .wrap{max-width:100%;}
+    header{padding:20px 18px; border-radius:14px; margin-bottom:16px;}
+    header h1{font-size:1.25rem;}
+    header p{font-size:.88rem;}
+    .card{padding:16px 14px; margin-bottom:16px; border-radius:14px;}
+    .progress-box{gap:10px;}
+    .progress-num{flex:1 1 100%; order:1; text-align:center;}
+    .progress-track{flex:1 1 100%; order:2; min-width:0;}
+    input,select,textarea{font-size:16px;}
+    .btn-add{width:100%; padding:12px;}
+    .chip{padding:8px 16px;}
+    .task{gap:10px; padding:12px 10px;}
+    .task input[type=checkbox]{width:26px; height:26px;}
+    .btn-del{padding:10px 12px; align-self:center;}
+    .btn-clear{width:100%; padding:12px;}
+    .footer-note{margin-top:10px;}
+    .table-scroll{overflow:visible;}
+    table{min-width:0; border:none;}
+    thead{display:none;}
+    table,tbody,tr,th,td{display:block; width:100%;}
+    tr{border:1px solid var(--line); border-radius:12px; margin-bottom:12px; padding:8px; background:#fff; overflow:hidden;}
+    tbody th{width:auto; background:#eef2ff; color:#3730a3; border-radius:8px; margin-bottom:8px; padding:8px; text-align:center;}
+    td{border:none; border-top:1px dashed var(--line); min-width:0; padding:6px 4px; display:flex; align-items:center; gap:10px;}
+    td:first-of-type{border-top:none;}
+    td::before{content:attr(data-label); flex:0 0 46px; font-size:.85rem; font-weight:600; color:var(--muted);}
+    td textarea{min-height:40px; text-align:right;}
+    tr.today-row{border-color:#93c5fd; box-shadow:0 0 0 2px rgba(59,130,246,.18);}
+  }
+  @media(max-width:480px){
+    .add-form{grid-template-columns:1fr;}
+    header h1{font-size:1.12rem;}
+    .task-meta{font-size:.75rem;}
+  }
+
+  /* دکمه پاک کردن */
+  .btn-clear{background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; border-radius:10px; padding:8px 16px; font-size:.85rem; font-weight:500;}
+  .btn-clear:hover{background:#fee2e2;}
+  .footer-note{text-align:center; color:var(--muted); font-size:.8rem; margin-top:6px;}
 </style>
 </head>
 <body>
 
+<!-- ① آدرس API شما روی کلودفلر -->
 <script>
-var firebaseConfig = {
-  apiKey: "AIzaSyA9EHQAlggkHom_5D0oVfBdI1owPrHg4K4",
-  authDomain: "to-do-list-d3b54.firebaseapp.com",
-  projectId: "to-do-list-d3b54",
-  storageBucket: "to-do-list-d3b54.firebasestorage.app",
-  messagingSenderId: "643752825434",
-  appId: "1:643752825434:web:9c0ee7d67f630babbb7e63"
-};
+  var API_BASE = "https://todo-api.mohammad-pakdelian1376.workers.dev";
 </script>
 
+<!-- ② صفحه ورود -->
 <div id="loginWrap" class="login-wrap" style="display:none">
   <div class="login-card">
     <div class="login-logo">📅</div>
     <h2>برنامه و تکالیف هفتگی</h2>
-    <p>برای ذخیره و همگام‌سازی داده‌ها در فضای ابری و دسترسی از همه دستگاه‌ها، وارد حساب خود شوید.</p>
-    <button id="loginBtn" class="btn-google">
-      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
-      ورود با حساب گوگل
-    </button>
-    <p class="login-note">فقط حساب خودتان به داده‌ها دسترسی دارد.<br>ورود با رمزعبور گوگل انجام می‌شود — هیچ اطلاعاتی ذخیره نمی‌شود.</p>
+    <p>برای ذخیره و همگام‌سازی داده‌ها در فضای ابری و دسترسی از همه دستگاه‌ها، رمز عبور خود را وارد کنید.</p>
+    <div class="login-error" id="loginError"></div>
+    <form id="loginForm">
+      <input type="password" id="passwordInput" placeholder="رمز عبور" autocomplete="current-password" required>
+      <button class="btn-add" type="submit" id="loginSubmit">ورود</button>
+    </form>
+    <p class="login-note">داده‌ها روی سرور ابری کلودفلر ذخیره می‌شوند و بدون نیاز به فیلترشکن قابل دسترس است.<br>فقط شما با این رمز به آن‌ها دسترسی دارید.</p>
   </div>
 </div>
 
+<!-- ③ برنامه اصلی -->
 <div id="mainWrap" class="wrap" style="display:none">
+
   <header>
     <h1>📅 برنامه و تکالیف هفتگی</h1>
-    <p>جدول برنامهٔ درسی و چک‌لیست تکالیف — تغییرات به‌صورت آنی در فضای ابری ذخیره و همگام می‌شوند.</p>
+    <p>جدول برنامهٔ درسی و چک‌لیست تکالیف — تغییرات در فضای ابری ذخیره و بین دستگاه‌های شما همگام می‌شوند.</p>
     <div class="today" id="todayLabel"></div>
     <div class="account-row">
       <div class="account-info">
-        <span class="avatar">👤</span>
-        <span id="userEmail"></span>
+        <span class="avatar">🔒</span>
+        <span id="userEmail">حساب شخصی</span>
       </div>
       <div class="sync-state" id="syncBox"><span class="sync-dot"></span><span id="syncText">در حال بارگذاری…</span></div>
       <button class="btn-logout" id="logoutBtn">خروج</button>
@@ -229,11 +242,13 @@ var firebaseConfig = {
       </select>
       <button class="btn-add" type="submit">افزودن</button>
     </form>
+
     <div class="filters">
       <button class="chip active" data-filter="all">همه</button>
       <button class="chip" data-filter="pending">انجام نشده</button>
       <button class="chip" data-filter="done">انجام شده</button>
     </div>
+
     <ul class="task-list" id="taskList"></ul>
     <p class="empty" id="emptyMsg">هنوز تکلیفی ثبت نشده. اولین تکلیف خود را اضافه کنید.</p>
   </section>
@@ -243,7 +258,9 @@ var firebaseConfig = {
     <div class="table-scroll">
       <table id="scheduleTable">
         <thead>
-          <tr><th>روز</th><th>صبح</th><th>ظهر</th><th>عصر</th><th>شب</th></tr>
+          <tr>
+            <th>روز</th><th>صبح</th><th>ظهر</th><th>عصر</th><th>شب</th>
+          </tr>
         </thead>
         <tbody id="scheduleBody"></tbody>
       </table>
@@ -254,15 +271,16 @@ var firebaseConfig = {
   <section class="card" style="text-align:center;">
     <button class="btn-clear" id="clearAll">پاک کردن همهٔ تکالیف و برنامه‌ها</button>
   </section>
+
 </div>
 
 <script>
 (function(){
   "use strict";
-  var app  = firebase.initializeApp(firebaseConfig);
-  var auth = firebase.auth();
-  var db   = firebase.firestore();
-  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+  /* ============ تنظیمات ============ */
+  var TOKEN_KEY = "todo_token_v1";   // کلید ذخیرهٔ رمز نشست در مرورگر
+  var CACHE_KEY = "todo_cache_v1";   // کپی محلی برای حالت آفلاین
 
   var DAYS = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه"];
   var P_LABEL = {high:"فوری", mid:"متوسط", low:" کم اهمیت"};
@@ -272,12 +290,15 @@ var firebaseConfig = {
   var tasks = [];
   var schedule = {};
   var filter = "all";
-  var uid = null;
-  var unsub = null;
+  var token = localStorage.getItem(TOKEN_KEY) || null;
+  var lastUpdatedAt = 0;
   var saveTimer = null;
+  var pollTimer = null;
 
+  /* ============ ابزارها ============ */
   function faDigits(s){ return String(s).replace(/\d/g, function(d){ return "۰۱۲۳۴۵۶۷۸۹"[d]; }); }
   function loadLocal(k){ try{ var v = JSON.parse(localStorage.getItem(k)); return v || null; }catch(e){ return null; } }
+  function saveCache(){ try{ localStorage.setItem(CACHE_KEY, JSON.stringify({ tasks: tasks, schedule: schedule })); }catch(e){} }
   function escapeHtml(s){
     return String(s).replace(/[&<>"']/g, function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
@@ -291,20 +312,122 @@ var firebaseConfig = {
     if(state === "saving"){ syncBox.classList.add("saving"); syncText.textContent = "در حال همگام‌سازی…"; }
     else if(state === "saved"){ syncText.textContent = "همگام‌سازی شد ✓"; }
     else if(state === "error"){ syncBox.classList.add("error"); syncText.textContent = "خطا در اتصال — بعداً دوباره تلاش می‌شود"; }
-    else if(state === "offline"){ syncText.textContent = "آفلاین — تغییرات محلی ذخیره شد"; }
+    else if(state === "offline"){ syncText.textContent = "آفلاین — تغییرات محلی نگه داشته شد"; }
   }
 
+  /* ============ ارتباط با سرور (Cloudflare Worker) ============ */
+  function api(path, method, body){
+    return fetch(API_BASE + path, {
+      method: method,
+      headers: Object.assign(
+        { "Content-Type": "application/json" },
+        token ? { "Authorization": "Bearer " + token } : {}
+      ),
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function(r){
+      return r.text().then(function(txt){
+        var data = null;
+        try{ data = txt ? JSON.parse(txt) : null; }catch(e){ data = { error: "پاسخ سرور نامعتبر است" }; }
+        if(!r.ok) throw Object.assign({ status: r.status }, data || {});
+        return data;
+      });
+    });
+  }
+
+  /* ============ ذخیره در فضای ابری ============ */
   function persist(){
-    if(!db || !uid){ showSync("offline"); return; }
+    if(!token){ showSync("offline"); saveCache(); return; }
     showSync("saving");
+
     clearTimeout(saveTimer);
     saveTimer = setTimeout(function(){
-      db.collection("users").doc(uid).set({ tasks: tasks, schedule: schedule })
-        .then(function(){ showSync("saved"); })
-        .catch(function(err){ showSync("error"); console.error(err); });
+      api("/api/state", "POST", { data: JSON.stringify({ tasks: tasks, schedule: schedule }) })
+        .then(function(res){
+          lastUpdatedAt = res.updated_at || Date.now();
+          showSync("saved");
+        })
+        .catch(function(err){
+          if(err && err.status === 401){ showLoginScreen(); return; } // نشست منقضی شده
+          showSync("error");
+          saveCache();
+          console.error(err);
+        });
     }, 400);
   }
 
+  /* ============ بارگذاری داده‌ها از سرور ============ */
+  function loadState(){
+    if(!token){ showLoginScreen(); return; }
+    syncText.textContent = "در حال بارگذاری…";
+    showSync("saving");
+
+    api("/api/state", "GET")
+      .then(function(res){
+        if(res.data == null){
+          // اولین بار: آیا دادهٔ قدیمی در مرورگر این دستگاه هست؟
+          var oldT = loadLocal("weekly_tasks_v1");
+          var oldS = loadLocal("weekly_schedule_v1");
+          if(oldT || oldS){
+            tasks = oldT || [];
+            schedule = oldS || {};
+            renderTasks(); renderSchedule();
+            persist(); // در فضای ابری ذخیره می‌شود
+          } else {
+            tasks = []; schedule = {};
+            renderTasks(); renderSchedule();
+          }
+        } else {
+          var d = {};
+          try{ d = JSON.parse(res.data) || {}; }catch(e){ d = {}; }
+          tasks = Array.isArray(d.tasks) ? d.tasks : [];
+          schedule = (d.schedule && typeof d.schedule === "object") ? d.schedule : {};
+          renderTasks(); renderSchedule();
+        }
+        lastUpdatedAt = res.updated_at || 0;
+        showSync("saved");
+        saveCache();
+        startPolling();
+      })
+      .catch(function(err){
+        if(err && err.status === 401){ showLoginScreen(); return; }
+        // آفلاین یا سرور در دسترس نیست: آخرین دادهٔ ذخیره‌شده محلی را نشان بده
+        var cache = loadLocal(CACHE_KEY);
+        if(cache){
+          tasks = Array.isArray(cache.tasks) ? cache.tasks : [];
+          schedule = (cache.schedule && typeof cache.schedule === "object") ? cache.schedule : {};
+          renderTasks(); renderSchedule();
+        }
+        showSync("error");
+        startPolling(); // وقتی اینترنت برگشت، دوباره تلاش می‌کند
+      });
+  }
+
+  /* ============ همگام‌سازی دوره‌ای بین دستگاه‌ها ============ */
+  function startPolling(){
+    if(pollTimer) clearInterval(pollTimer);
+    pollTimer = setInterval(function(){
+      if(!token) return;
+      // اگر کاربر در حال تایپ در جدول است، رندر مجدد نکنیم
+      var ae = document.activeElement;
+      if(ae && ae.tagName === "TEXTAREA") return;
+
+      api("/api/state", "GET")
+        .then(function(res){
+          if((res.updated_at || 0) > lastUpdatedAt){
+            var d = {};
+            try{ d = JSON.parse(res.data) || {}; }catch(e){ d = {}; }
+            tasks = Array.isArray(d.tasks) ? d.tasks : [];
+            schedule = (d.schedule && typeof d.schedule === "object") ? d.schedule : {};
+            lastUpdatedAt = res.updated_at || 0;
+            renderTasks(); renderSchedule();
+            saveCache();
+          }
+        })
+        .catch(function(){ /* بی‌اثر؛ دورهٔ بعدی تلاش می‌کند */ });
+    }, 10000); // هر ۱۰ ثانیه
+  }
+
+  /* ============ تاریخ امروز ============ */
   var now = new Date();
   var faDate = now.toLocaleDateString("fa-IR", {weekday:"long", year:"numeric", month:"long", day:"numeric"});
   document.getElementById("todayLabel").textContent = "امروز: " + faDigits(faDate);
@@ -313,6 +436,7 @@ var firebaseConfig = {
     return map[now.getDay()];
   })();
 
+  /* ============ چک‌لیست تکالیف ============ */
   var listEl = document.getElementById("taskList");
   var emptyEl = document.getElementById("emptyMsg");
 
@@ -325,9 +449,11 @@ var firebaseConfig = {
     });
     var pOrder = {high:0, mid:1, low:2};
     visible.sort(function(a,b){ return (a.done - b.done) || (pOrder[a.priority] - pOrder[b.priority]); });
+
     visible.forEach(function(t){
       var li = document.createElement("li");
       li.className = "task" + (t.done ? " done" : "");
+
       var cb = document.createElement("input");
       cb.type = "checkbox";
       cb.checked = !!t.done;
@@ -336,19 +462,24 @@ var firebaseConfig = {
         persist();
         renderTasks();
       });
+
       var body = document.createElement("div");
       body.className = "task-body";
+
       var title = document.createElement("div");
       title.className = "task-title";
       title.textContent = t.title;
+
       var meta = document.createElement("div");
       meta.className = "task-meta";
       meta.innerHTML =
-        '<span class="tag day">' + t.day + '</span>' +
+        '<span class="tag day">' + escapeHtml(t.day) + '</span>' +
         (t.subject ? '<span class="tag subject">' + escapeHtml(t.subject) + '</span>' : '') +
         '<span class="tag ' + P_CLASS[t.priority] + '">' + P_LABEL[t.priority] + '</span>';
+
       body.appendChild(title);
       body.appendChild(meta);
+
       var del = document.createElement("button");
       del.className = "btn-del";
       del.textContent = "حذف";
@@ -357,11 +488,13 @@ var firebaseConfig = {
         persist();
         renderTasks();
       });
+
       li.appendChild(cb);
       li.appendChild(body);
       li.appendChild(del);
       listEl.appendChild(li);
     });
+
     emptyEl.style.display = visible.length ? "none" : "block";
     updateProgress();
   }
@@ -409,6 +542,7 @@ var firebaseConfig = {
     }
   });
 
+  /* ============ جدول برنامه هفتگی ============ */
   var schedBody = document.getElementById("scheduleBody");
 
   function renderSchedule(){
@@ -416,9 +550,11 @@ var firebaseConfig = {
     DAYS.forEach(function(day){
       var tr = document.createElement("tr");
       if(day === todayName) tr.className = "today-row";
+
       var th = document.createElement("th");
       th.textContent = day;
       tr.appendChild(th);
+
       SLOTS.forEach(function(slot){
         var td = document.createElement("td");
         td.dataset.label = slot;
@@ -437,77 +573,59 @@ var firebaseConfig = {
     });
   }
 
+  /* ============ ورود / احراز هویت ============ */
   var loginWrap = document.getElementById("loginWrap");
   var mainWrap  = document.getElementById("mainWrap");
 
-  document.getElementById("loginBtn").addEventListener("click", function(){
-    var provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
-    // در گوشی موبایل پاپ‌آپ مسدود می‌شود → از روش redirect استفاده می‌کنیم
-    var isMobile = /android|iphone|ipad|ipod|windows phone|mobile/i.test(navigator.userAgent);
-    if(isMobile){
-      auth.signInWithRedirect(provider);
-      return;
-    }
-    auth.signInWithPopup(provider).catch(function(error){
-      if(error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request" || error.code === "auth/operation-not-supported-in-this-environment"){
-        auth.signInWithRedirect(provider);
-      } else {
-        alert("خطا در ورود: " + (error.message || error.code));
-      }
-    });
+  function showLoginScreen(){
+    token = null;
+    try{ localStorage.removeItem(TOKEN_KEY); }catch(e){}
+    if(pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+    loginWrap.style.display = "flex";
+    mainWrap.style.display = "none";
+    var pw = document.getElementById("passwordInput");
+    if(pw) pw.value = "";
+    var errEl = document.getElementById("loginError");
+    if(errEl) errEl.textContent = "";
+  }
+
+  function showApp(){
+    loginWrap.style.display = "none";
+    mainWrap.style.display = "block";
+    document.getElementById("userEmail").textContent = "حساب شخصی";
+    renderTasks(); renderSchedule();
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var pw = document.getElementById("passwordInput").value;
+    var errEl = document.getElementById("loginError");
+    var btn = document.getElementById("loginSubmit");
+    errEl.textContent = "";
+    btn.disabled = true;
+    btn.textContent = "در حال ورود…";
+
+    api("/api/login", "POST", { password: pw })
+      .then(function(res){
+        token = res.token;
+        try{ localStorage.setItem(TOKEN_KEY, token); }catch(err){}
+        showApp();
+        loadState();
+      })
+      .catch(function(err){
+        btn.disabled = false;
+        btn.textContent = "ورود";
+        errEl.textContent = (err && err.error) ? err.error : "خطا در ارتباط با سرور";
+      });
   });
 
   document.getElementById("logoutBtn").addEventListener("click", function(){
-    auth.signOut();
+    showLoginScreen();
   });
 
-  function showLoginScreen(){
-    if (unsub){ unsub(); unsub = null; }
-    uid = null;
-    loginWrap.style.display = "flex";
-    mainWrap.style.display = "none";
-  }
-
-  function showApp(user){
-    uid = user.uid;
-    loginWrap.style.display = "none";
-    mainWrap.style.display = "block";
-    document.getElementById("userEmail").textContent = user.email;
-    renderTasks(); renderSchedule();
-    unsub = db.collection("users").doc(uid).onSnapshot(function(doc){
-      if(doc.metadata.hasPendingWrites) return;
-      if(!doc.exists){
-        var oldT = loadLocal("weekly_tasks_v1");
-        var oldS = loadLocal("weekly_schedule_v1");
-        if(oldT || oldS){
-          tasks = oldT || [];
-          schedule = oldS || {};
-          renderTasks(); renderSchedule();
-          persist();
-        } else {
-          tasks = []; schedule = {};
-          renderTasks(); renderSchedule();
-        }
-        showSync("saved");
-        return;
-      }
-      var d = doc.data() || {};
-      tasks = Array.isArray(d.tasks) ? d.tasks : [];
-      schedule = (d.schedule && typeof d.schedule === "object") ? d.schedule : {};
-      renderTasks(); renderSchedule();
-      showSync("saved");
-    }, function(err){
-      showSync("error");
-      console.error(err);
-    });
-  }
-
-  auth.onAuthStateChanged(function(user){
-    if(user) showApp(user);
-    else showLoginScreen();
-  });
-  auth.getRedirectResult().catch(function(){});
+  /* ============ شروع برنامه ============ */
+  if(token){ showApp(); loadState(); }
+  else { showLoginScreen(); }
 })();
 </script>
 </body>
