@@ -20,9 +20,9 @@
     font-family:'Vazirmatn',Tahoma,sans-serif; background:var(--bg); color:var(--ink);
     padding:22px 16px 60px; line-height:1.7;
   }
+  body.bulk-active{padding-bottom:96px;}
   .wrap{max-width:1080px; margin:0 auto;}
 
-  /* هدر */
   header{
     background:linear-gradient(135deg,#2563eb,#4f46e5); color:#fff;
     border-radius:18px; padding:26px 28px; margin-bottom:22px;
@@ -32,7 +32,15 @@
   header p{opacity:.92; font-size:.95rem;}
   header .today{font-size:.85rem; opacity:.85; margin-top:8px;}
 
-  /* باکس حساب کاربری و وضعیت همگام‌سازی */
+  .hdr-btns{display:flex; gap:8px; flex-wrap:wrap;}
+  .hdr-btns button{
+    background:rgba(255,255,255,.15); color:#fff; border:1px solid rgba(255,255,255,.4);
+    border-radius:8px; padding:5px 14px; font-size:.8rem; font-weight:500; cursor:pointer;
+    min-height:44px; display:inline-flex; align-items:center; gap:5px;
+  }
+  .hdr-btns button:hover{background:rgba(255,255,255,.28);}
+  .hdr-btns button:disabled{opacity:.45; cursor:default;}
+
   .account-row{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,.25);}
   .account-info{display:flex; align-items:center; gap:10px; font-size:.85rem;}
   .account-info .avatar{width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:1rem;}
@@ -41,10 +49,7 @@
   .sync-state.saving .sync-dot{background:#fbbf24; animation:pulse 1s infinite;}
   .sync-state.error .sync-dot{background:#f87171;}
   @keyframes pulse{50%{opacity:.3;}}
-  .btn-logout{background:rgba(255,255,255,.15); color:#fff; border:1px solid rgba(255,255,255,.4); border-radius:8px; padding:5px 14px; font-size:.8rem; font-weight:500; cursor:pointer; min-height:44px; display:inline-flex; align-items:center;}
-  .btn-logout:hover{background:rgba(255,255,255,.28);}
 
-  /* صفحه ورود */
   .login-wrap{display:flex; align-items:center; justify-content:center; min-height:60vh;}
   .login-card{
     background:var(--card); border:1px solid var(--line); border-radius:18px;
@@ -59,22 +64,28 @@
   .login-error{color:var(--red); font-size:.85rem; min-height:1.3em; margin-bottom:10px;}
   .login-note{margin-top:18px; font-size:.75rem; color:var(--muted);}
 
-  /* کارت‌ها */
   .card{
     background:var(--card); border:1px solid var(--line); border-radius:16px;
     padding:20px 22px; margin-bottom:22px; box-shadow:0 2px 10px rgba(15,23,42,.04);
   }
   .card h2{font-size:1.1rem; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
   .card h2::before{content:""; width:8px; height:20px; border-radius:4px; background:var(--brand); display:inline-block;}
+  .card.collapsed .card-body{display:none;}
+  .card.collapsed{padding-bottom:16px;}
+  .collapse-btn{margin-right:auto; background:none; font-size:1rem; color:var(--muted); cursor:pointer; min-width:44px; min-height:44px; border-radius:8px;}
+  .collapse-btn:hover{background:#f1f5f9;}
 
-  /* نوار پیشرفت */
+  .list-row{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; align-items:center;}
+  .list-row select{flex:1; min-width:160px;}
+  .mini-btn{background:#f1f5f9; color:#475569; border-radius:8px; padding:8px 12px; font-size:.82rem; cursor:pointer; min-height:44px; display:inline-flex; align-items:center;}
+  .mini-btn:hover{background:#e2e8f0;}
+
   .progress-box{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
   .progress-track{flex:1; min-width:220px; height:16px; background:#e9eef5; border-radius:99px; overflow:hidden;}
   .progress-fill{height:100%; width:0%; background:linear-gradient(90deg,#22c55e,#16a34a); border-radius:99px; transition:width .4s ease;}
   .progress-num{font-weight:700; white-space:nowrap; font-size:.95rem;}
   .progress-num small{color:var(--muted); font-weight:400;}
 
-  /* فرم افزودن */
   .add-form{display:grid; grid-template-columns:2fr 1fr 1fr 1fr auto; gap:10px; margin-bottom:16px;}
   @media(max-width:760px){ .add-form{grid-template-columns:1fr 1fr;} .add-form .full{grid-column:1/-1;} }
   input,select,button{
@@ -85,8 +96,9 @@
   button{cursor:pointer; border:none;}
   .btn-add{background:var(--brand); color:#fff; font-weight:600; padding:9px 18px; border-radius:10px; transition:.15s; min-height:44px; display:inline-flex; align-items:center; justify-content:center;}
   .btn-add:hover{background:var(--brand-dark);}
+  .mic{background:#eef2ff; color:#3730a3; border-radius:10px; width:44px; min-height:44px; font-size:1.05rem; flex-shrink:0;}
+  .mic.recording{background:#fee2e2; color:#b91c1c; animation:pulse 1s infinite;}
 
-  /* فیلترها */
   .filters{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
   .chip{
     background:var(--chip); color:#3730a3; border-radius:99px; padding:5px 14px;
@@ -95,20 +107,22 @@
   }
   .chip:hover{background:#e0e7ff;}
   .chip.active{background:var(--brand); color:#fff;}
+  .chip.toggle{background:#fef3c7; color:#b45309;}
+  .chip.toggle.active{background:var(--amber); color:#fff;}
 
-  /* لیست تکالیف */
   .task-list{list-style:none; display:flex; flex-direction:column; gap:10px;}
   .task{
-    display:flex; align-items:center; gap:12px; background:#fbfcfe;
+    display:flex; align-items:center; gap:10px; background:#fbfcfe;
     border:1px solid var(--line); border-radius:12px; padding:12px 14px; transition:.15s;
   }
   .task:hover{border-color:#c7d2fe; box-shadow:0 2px 8px rgba(15,23,42,.05);}
   .task.done{background:var(--green-soft); border-color:#bbf7d0;}
   .task.done .task-title{text-decoration:line-through; color:var(--muted);}
-  .task input[type=checkbox]{
-    width:22px; height:22px; accent-color:var(--green); cursor:pointer; flex-shrink:0;
-  }
-  .task-body{flex:1; min-width:0;}
+  .task.dragging{opacity:.4;}
+  .task.editing{flex-direction:column; align-items:stretch;}
+  .task input[type=checkbox]{width:22px; height:22px; accent-color:var(--green); cursor:pointer; flex-shrink:0;}
+  .task input.selcb{accent-color:var(--brand);}
+  .task-body{flex:1; min-width:0; cursor:text;}
   .task-title{font-weight:600; font-size:.98rem; word-break:break-word;}
   .task-meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:5px; font-size:.78rem;}
   .tag{border-radius:99px; padding:2px 10px; font-weight:500;}
@@ -117,16 +131,24 @@
   .tag.p-high{background:#fee2e2; color:#b91c1c;}
   .tag.p-mid{background:#fef3c7; color:#b45309;}
   .tag.p-low{background:#d1fae5; color:#047857;}
-  .btn-del{background:#fee2e2; color:#b91c1c; border-radius:8px; padding:6px 14px; font-size:.85rem; flex-shrink:0; min-height:44px; display:inline-flex; align-items:center; justify-content:center;}
-  .btn-del:hover{background:#fecaca;}
+  .task-actions{display:flex; gap:6px; flex-shrink:0;}
+  .icon-btn{background:#f1f5f9; color:#475569; border-radius:8px; width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem; cursor:pointer;}
+  .icon-btn:hover{background:#e2e8f0;}
+  .icon-btn.danger{background:#fee2e2; color:#b91c1c;}
+  .icon-btn.danger:hover{background:#fecaca;}
+  .edit-grid{display:grid; grid-template-columns:2fr 1fr 1fr 1fr auto auto; gap:8px; width:100%;}
+  @media(max-width:720px){.edit-grid{grid-template-columns:1fr 1fr;}}
+  .move-strip{display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding-top:10px; border-top:1px dashed var(--line); margin-top:10px; font-size:.8rem; color:var(--muted);}
+  .mini-day{padding:5px 12px; border-radius:99px; background:#eef2ff; color:#3730a3; font-size:.8rem; min-height:36px; cursor:pointer; border:1px solid transparent;}
+  .mini-day:hover{background:#e0e7ff;}
   .empty{color:var(--muted); text-align:center; padding:26px 0; font-size:.92rem;}
 
-  /* جدول برنامه هفتگی */
   .table-scroll{overflow-x:auto;}
   table{width:100%; border-collapse:collapse; min-width:640px; font-size:.88rem;}
   th,td{border:1px solid var(--line); padding:9px 10px; text-align:center; vertical-align:middle;}
   thead th{background:#eef2ff; color:#3730a3; font-weight:600; white-space:nowrap;}
   tbody th{background:#f8fafc; font-weight:600; white-space:nowrap; width:90px;}
+  tbody th.drop-ok{background:#dbeafe;}
   td{background:#fff; min-width:110px;}
   td textarea{
     width:100%; min-height:52px; resize:vertical; border:none; background:transparent;
@@ -135,8 +157,8 @@
   td textarea:focus{background:#f8faff; border-radius:6px;}
   tr.today-row th{background:#dbeafe; color:#1d4ed8;}
   tr.today-row th::after{content:" امروز"; font-size:.7rem; font-weight:500; display:block;}
+  tr.hide-day{display:none !important;}
 
-  /* موبایل و تبلت */
   @media(max-width:720px){
     body{padding:14px 10px calc(48px + env(safe-area-inset-bottom));}
     .wrap{max-width:100%;}
@@ -152,7 +174,6 @@
     .chip{padding:8px 16px;}
     .task{gap:10px; padding:12px 10px;}
     .task input[type=checkbox]{width:28px; height:28px;}
-    .btn-del{padding:10px 14px; align-self:center;}
     .btn-clear{width:100%; padding:12px;}
     .footer-note{margin-top:10px;}
     .table-scroll{overflow:visible;}
@@ -173,20 +194,42 @@
     .task-meta{font-size:.75rem;}
   }
 
-  /* دکمه پاک کردن */
   .btn-clear{background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; border-radius:10px; padding:8px 16px; font-size:.85rem; font-weight:500; min-height:44px; display:inline-flex; align-items:center; justify-content:center;}
   .btn-clear:hover{background:#fee2e2;}
   .footer-note{text-align:center; color:var(--muted); font-size:.8rem; margin-top:6px;}
+
+  .bulkbar{position:fixed; left:0; right:0; bottom:0; z-index:40; background:#1e293b; color:#fff;
+    display:none; gap:8px; align-items:center; padding:10px 14px; flex-wrap:wrap; justify-content:center;
+    box-shadow:0 -4px 20px rgba(0,0,0,.25);}
+  body.bulk-active .bulkbar{display:flex;}
+  .bulkbar button{background:#334155; color:#fff; border-radius:8px; padding:8px 12px; font-size:.8rem; min-height:40px; cursor:pointer;}
+  .bulkbar button:hover{background:#475569;}
+  .bulkbar select{background:#334155; color:#fff; border:1px solid #475569; font-size:.8rem; min-height:40px; padding:6px;}
+  .bulkbar .sel-count{font-size:.82rem; font-weight:600;}
+
+  .modal{position:fixed; inset:0; background:rgba(15,23,42,.5); z-index:50; display:none; align-items:center; justify-content:center; padding:16px;}
+  .modal.open{display:flex;}
+  .modal-card{background:#fff; border-radius:16px; max-width:560px; width:100%; max-height:85vh; overflow:auto; padding:24px;}
+  .modal-card h2{font-size:1.1rem; margin-bottom:16px;}
+  .modal-card h3{font-size:.95rem; margin:18px 0 10px; color:var(--ink);}
+  .modal-card input{width:100%; padding:10px 12px; margin-bottom:10px;}
+  .modal-card .msg{font-size:.82rem; min-height:1.3em; margin-bottom:8px;}
+  .blist{list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .blist li{display:flex; align-items:center; justify-content:space-between; gap:8px; background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:8px 12px; font-size:.85rem;}
+  .blist .when{color:var(--muted); font-size:.8rem;}
+
+  #toast{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:#1e2430; color:#fff;
+    padding:10px 20px; border-radius:99px; font-size:.85rem; z-index:60; opacity:0; transition:opacity .25s; pointer-events:none;}
+  #toast.show{opacity:1;}
 </style>
 </head>
 <body>
 
-<!-- ① آدرس API شما روی کلودفلر -->
 <script>
   var API_BASE = "https://todo-api.mohammad-pakdelian1376.workers.dev";
 </script>
 
-<!-- ② صفحه ورود -->
+<!-- صفحه ورود -->
 <div id="loginWrap" class="login-wrap" style="display:none">
   <div class="login-card">
     <div class="login-logo">📅</div>
@@ -201,7 +244,7 @@
   </div>
 </div>
 
-<!-- ③ برنامه اصلی -->
+<!-- برنامه اصلی -->
 <div id="mainWrap" class="wrap" style="display:none">
 
   <header>
@@ -214,110 +257,255 @@
         <span id="userEmail">حساب شخصی</span>
       </div>
       <div class="sync-state" id="syncBox"><span class="sync-dot"></span><span id="syncText">در حال بارگذاری…</span></div>
-      <button class="btn-logout" id="logoutBtn">خروج</button>
+      <div class="hdr-btns">
+        <button type="button" id="shareBtn">🔗 امروز را ارسال کن</button>
+        <button type="button" id="undoBtn" disabled>↩ بازگردانی</button>
+        <button type="button" id="settingsBtn">⚙️ تنظیمات</button>
+        <button type="button" id="logoutBtn">خروج</button>
+      </div>
     </div>
   </header>
 
-  <section class="card">
-    <h2>پیشرفت تکالیف</h2>
-    <div class="progress-box">
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="progress-num"><span id="doneCount">0</span> از <span id="totalCount">0</span> <small>تکمیل شده</small></div>
+  <section class="card" id="cardProgress">
+    <h2><button class="collapse-btn" data-card="cardProgress">▾</button>پیشرفت تکالیف</h2>
+    <div class="card-body">
+      <div class="progress-box">
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-num"><span id="doneCount">0</span> از <span id="totalCount">0</span> <small>تکمیل شده</small></div>
+      </div>
     </div>
   </section>
 
-  <section class="card">
-    <h2>چک‌لیست تکالیف</h2>
-    <form class="add-form" id="addForm">
-      <input class="full" type="text" id="taskTitle" placeholder="عنوان تکلیف یا برنامهٔ مطالعه…" required>
-      <select id="taskDay">
-        <option value="شنبه">شنبه</option><option value="یکشنبه">یکشنبه</option>
-        <option value="دوشنبه">دوشنبه</option><option value="سه‌شنبه">سه‌شنبه</option>
-        <option value="چهارشنبه">چهارشنبه</option><option value="پنجشنبه">پنجشنبه</option>
-        <option value="جمعه">جمعه</option>
-      </select>
-      <input type="text" id="taskSubject" placeholder="درس (اختیاری)">
-      <select id="taskPriority">
-        <option value="low">اولویت: کم</option>
-        <option value="mid" selected>اولویت: متوسط</option>
-        <option value="high">اولویت: بالا</option>
-      </select>
-      <button class="btn-add" type="submit">افزودن</button>
-    </form>
+  <section class="card" id="cardTasks">
+    <h2><button class="collapse-btn" data-card="cardTasks">▾</button>چک‌لیست تکالیف</h2>
+    <div class="card-body">
+      <div class="list-row">
+        <select id="listSelect" title="انتخاب لیست"></select>
+        <button type="button" class="mini-btn" id="newListBtn">＋ لیست جدید</button>
+        <button type="button" class="mini-btn" id="renameListBtn">✎ نام لیست</button>
+        <button type="button" class="mini-btn" id="delListBtn">🗑 حذف لیست</button>
+      </div>
 
-    <div class="filters">
-      <button class="chip active" data-filter="all">همه</button>
-      <button class="chip" data-filter="pending">انجام نشده</button>
-      <button class="chip" data-filter="done">انجام شده</button>
+      <form class="add-form" id="addForm">
+        <div class="full" style="display:flex; gap:8px;">
+          <input type="text" id="taskTitle" placeholder="عنوان تکلیف یا برنامهٔ مطالعه…" required style="flex:1;">
+          <button type="button" class="mic" id="micBtn" title="ورودی صوتی فارسی" style="display:none;">🎤</button>
+        </div>
+        <select id="taskDay"></select>
+        <input type="text" id="taskSubject" placeholder="درس (اختیاری)">
+        <select id="taskPriority">
+          <option value="low">اولویت: کم</option>
+          <option value="mid" selected>اولویت: متوسط</option>
+          <option value="high">اولویت: بالا</option>
+        </select>
+        <button class="btn-add" type="submit">افزودن</button>
+      </form>
+
+      <div class="filters">
+        <button type="button" class="chip active" data-filter="all">همه</button>
+        <button type="button" class="chip" data-filter="pending">انجام نشده</button>
+        <button type="button" class="chip" data-filter="done">انجام شده</button>
+        <button type="button" class="chip" data-filter="today">📅 امروز</button>
+        <button type="button" class="chip toggle" id="selectModeBtn">☑ انتخاب چندتایی</button>
+      </div>
+
+      <ul class="task-list" id="taskList"></ul>
+      <p class="empty" id="emptyMsg">هنوز تکلیفی ثبت نشده. اولین تکلیف خود را اضافه کنید.</p>
     </div>
-
-    <ul class="task-list" id="taskList"></ul>
-    <p class="empty" id="emptyMsg">هنوز تکلیفی ثبت نشده. اولین تکلیف خود را اضافه کنید.</p>
   </section>
 
-  <section class="card">
-    <h2>جدول برنامهٔ هفتگی</h2>
-    <div class="table-scroll">
-      <table id="scheduleTable">
-        <thead>
-          <tr>
-            <th>روز</th><th>صبح</th><th>ظهر</th><th>عصر</th><th>شب</th>
-          </tr>
-        </thead>
-        <tbody id="scheduleBody"></tbody>
-      </table>
+  <section class="card" id="cardSchedule">
+    <h2><button class="collapse-btn" data-card="cardSchedule">▾</button>جدول برنامهٔ هفتگی
+      <button type="button" class="chip toggle" id="todayOnlyBtn" style="margin-right:auto;">فقط امروز</button>
+    </h2>
+    <div class="card-body">
+      <div class="table-scroll">
+        <table id="scheduleTable">
+          <thead>
+            <tr><th>روز</th><th>صبح</th><th>ظهر</th><th>عصر</th><th>شب</th></tr>
+          </thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </div>
+      <p class="footer-note">سلول‌ها قابل ویرایش هستند؛ تغییرات به‌صورت خودکار ذخیره می‌شوند. تکالیف را می‌توانید روی نام روزها بکشید.</p>
     </div>
-    <p class="footer-note">سلول‌ها قابل ویرایش هستند؛ تغییرات به‌صورت خودکار ذخیره می‌شوند.</p>
   </section>
 
   <section class="card" style="text-align:center;">
     <button class="btn-clear" id="clearAll">پاک کردن همهٔ تکالیف و برنامه‌ها</button>
   </section>
-
 </div>
+
+<!-- نوار عملیات گروهی -->
+<div class="bulkbar" id="bulkBar">
+  <span class="sel-count" id="selCount">۰ مورد</span>
+  <button type="button" id="bulkDone">✔ انجام شد</button>
+  <button type="button" id="bulkUndone">✔ لغو انجام</button>
+  <select id="bulkDay"></select>
+  <button type="button" id="bulkMove">⇢ انتقال</button>
+  <button type="button" id="bulkCopy">⧉ کپی</button>
+  <button type="button" id="bulkDel">🗑 حذف</button>
+  <button type="button" id="bulkCancel">✕</button>
+</div>
+
+<!-- پنجرهٔ تنظیمات -->
+<div class="modal" id="settingsModal">
+  <div class="modal-card">
+    <h2>⚙️ تنظیمات</h2>
+    <h3>تغییر رمز عبور</h3>
+    <form id="pwForm">
+      <input type="password" id="pwCurrent" placeholder="رمز فعلی" autocomplete="current-password" required>
+      <input type="password" id="pwNew" placeholder="رمز جدید (حداقل ۶ کاراکتر)" autocomplete="new-password" required>
+      <input type="password" id="pwConfirm" placeholder="تکرار رمز جدید" autocomplete="new-password" required>
+      <div class="msg" id="pwMsg"></div>
+      <button class="btn-add" type="submit" id="pwSubmit">تغییر رمز</button>
+    </form>
+    <h3>پشتیبان‌ها (۱�۰ نسخهٔ اخیر روی سرور)</h3>
+    <ul class="blist" id="backupList"><li class="when">در حال بارگذاری…</li></ul>
+    <h3>داده‌ها</h3>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button type="button" class="mini-btn" id="exportBtn">⬇ دریافت همهٔ داده‌ها (JSON)</button>
+      <button type="button" class="mini-btn" id="logoutAllBtn" style="color:#b91c1c;">🔒 خروج از همهٔ دستگاه‌ها</button>
+    </div>
+    <div style="text-align:center; margin-top:20px;">
+      <button type="button" class="mini-btn" id="closeSettingsBtn">بستن</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
 
 <script>
 (function(){
   "use strict";
 
   /* ============ تنظیمات ============ */
-  var TOKEN_KEY = "todo_token_v1";   // کلید ذخیرهٔ رمز نشست در مرورگر
-  var CACHE_KEY = "todo_cache_v1";   // کپی محلی برای حالت آفلاین
+  var TOKEN_KEY    = "todo_token_v1";
+  var CACHE_KEY    = "todo_cache_v2";
+  var COLLAPSE_KEY = "todo_collapsed_v1";
 
   var DAYS = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه"];
   var P_LABEL = {high:"فوری", mid:"متوسط", low:" کم اهمیت"};
   var P_CLASS = {high:"p-high", mid:"p-mid", low:"p-low"};
   var SLOTS = ["صبح","ظهر","عصر","شب"];
 
-  var tasks = [];
-  var schedule = {};
+  var state = { v:2, lists:{}, schedule:{}, order:{}, tomb:[] };
+  var currentList = "default";
   var filter = "all";
   var token = localStorage.getItem(TOKEN_KEY) || null;
   var lastUpdatedAt = 0;
-  var saveTimer = null;
-  var pollTimer = null;
+  var pollTimer = null, syncTimer = null;
+  var dirty = false, syncing = false, retryCount = 0;
+  var undoStack = [], lastUndoPush = 0;
+  var selectMode = false, selected = {};
+  var editingId = null, moveId = null;
+  var todayOnly = false;
 
   /* ============ ابزارها ============ */
   function faDigits(s){ return String(s).replace(/\d/g, function(d){ return "۰۱۲۳۴۵۶۷۸۹"[d]; }); }
+  function nowTs(){ return Date.now(); }
+  function newId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+  function parseSafe(s){ try{ var v = JSON.parse(s); return (v && typeof v === "object") ? v : null; }catch(e){ return null; } }
   function loadLocal(k){ try{ var v = JSON.parse(localStorage.getItem(k)); return v || null; }catch(e){ return null; } }
-  function saveCache(){ try{ localStorage.setItem(CACHE_KEY, JSON.stringify({ tasks: tasks, schedule: schedule })); }catch(e){} }
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, function(c){
+  function saveCache(){ try{ localStorage.setItem(CACHE_KEY, JSON.stringify({ state: state })); }catch(e){} }
+  function esc(s){
+    return String(s==null?"":s).replace(/[&<>"']/g, function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
     });
   }
 
   var syncBox = document.getElementById("syncBox");
   var syncText = document.getElementById("syncText");
-  function showSync(state){
+  function showSync(st){
     syncBox.classList.remove("saving","error");
-    if(state === "saving"){ syncBox.classList.add("saving"); syncText.textContent = "در حال همگام‌سازی…"; }
-    else if(state === "saved"){ syncText.textContent = "همگام‌سازی شد ✓"; }
-    else if(state === "error"){ syncBox.classList.add("error"); syncText.textContent = "خطا در اتصال — بعداً دوباره تلاش می‌شود"; }
-    else if(state === "offline"){ syncText.textContent = "آفلاین — تغییرات محلی نگه داشته شد"; }
+    if(st === "saving"){ syncBox.classList.add("saving"); syncText.textContent = "در حال همگام‌سازی…"; }
+    else if(st === "saved"){ syncText.textContent = "همگام‌سازی شد ✓"; }
+    else if(st === "error"){ syncBox.classList.add("error"); syncText.textContent = "خطا در اتصال — بعداً دوباره تلاش می‌شود"; }
+    else if(st === "offline"){ syncText.textContent = "آفلاین — تغییرات محلی نگه داشته شد"; }
   }
 
-  /* ============ ارتباط با سرور (Cloudflare Worker) ============ */
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 2200);
+  }
+
+  /* ============ ساختار دادهٔ نسخهٔ ۲ ============ */
+  function listById(id){
+    if(!state.lists[id]) state.lists[id] = { id:id, name:"عمومی", tasks:[] };
+    if(!Array.isArray(state.lists[id].tasks)) state.lists[id].tasks = [];
+    return state.lists[id];
+  }
+  function curTasks(){ return listById(currentList).tasks; }
+  function ensureLists(s){
+    if(!s.lists || Object.keys(s.lists).length === 0) s.lists = { default:{ id:"default", name:"عمومی", tasks:[] } };
+    if(!s.schedule || typeof s.schedule !== "object") s.schedule = {};
+    if(!s.order || typeof s.order !== "object") s.order = {};
+    if(!Array.isArray(s.tomb)) s.tomb = [];
+    return s;
+  }
+  function migrateState(d){
+    if(d && d.v === 2) return ensureLists(d);
+    var out = { v:2, lists:{}, schedule:{}, order:{}, tomb:[] };
+    var oldT = null, oldS = null;
+    if(d && typeof d === "object"){
+      if(Array.isArray(d.tasks)) oldT = d.tasks;
+      if(d.schedule && typeof d.schedule === "object") oldS = d.schedule;
+    }
+    if(oldT || oldS){
+      var ts = nowTs();
+      out.lists.default = { id:"default", name:"عمومی",
+        tasks: (oldT||[]).map(function(t){ var c = {}; for(var k in t) c[k] = t[k]; c.ts = ts; return c; }) };
+      if(oldS) Object.keys(oldS).forEach(function(k){ out.schedule[k] = { ts: ts, text: String(oldS[k]) }; });
+    }
+    return ensureLists(out);
+  }
+
+  /* ادغام هوشمند: برای هر آیتم نسخه‌ای با ts جدیدتر برنده است (۲) */
+  function mergeStates(a, b){
+    var m = { v:2, lists:{}, schedule:{}, order:{}, tomb:[] };
+    var tomb = {};
+    (a.tomb||[]).concat(b.tomb||[]).forEach(function(t){
+      if(!tomb[t.id] || (t.ts||0) > tomb[t.id]) tomb[t.id] = t.ts;
+    });
+    Object.keys(tomb).forEach(function(id){ m.tomb.push({ id:id, ts:tomb[id] }); });
+
+    var la = a.lists||{}, lb = b.lists||{};
+    var lids = Object.keys(la).concat(Object.keys(lb).filter(function(x){ return !la[x]; }));
+    lids.forEach(function(lid){
+      var A = la[lid], B = lb[lid];
+      var l = m.lists[lid] = { id: lid, name: (B && B.name) || (A && A.name) || "لیست", tasks: [] };
+      var byId = {};
+      (A ? A.tasks : []).forEach(function(t){ byId[t.id] = t; });
+      (B ? B.tasks : []).forEach(function(t){
+        var o = byId[t.id];
+        if(!o || (t.ts||0) >= (o.ts||0)) byId[t.id] = t;
+      });
+      Object.keys(byId).forEach(function(id){
+        var t = byId[id];
+        if(!(tomb[id] >= (t.ts||0))) l.tasks.push(t);
+      });
+    });
+
+    var sa = a.schedule||{}, sb = b.schedule||{};
+    Object.keys(sa).concat(Object.keys(sb).filter(function(k){ return !sa[k]; })).forEach(function(k){
+      var ea = sa[k], eb = sb[k];
+      if(!ea) m.schedule[k] = eb;
+      else if(!eb) m.schedule[k] = ea;
+      else m.schedule[k] = ((eb.ts||0) >= (ea.ts||0)) ? eb : ea;
+    });
+
+    var oa = a.order||{}, ob = b.order||{};
+    Object.keys(oa).concat(Object.keys(ob)).forEach(function(lid){
+      if(m.order[lid]) return;
+      var ob2 = ob[lid] || [];
+      m.order[lid] = ob2.concat((oa[lid]||[]).filter(function(x){ return ob2.indexOf(x) < 0; }));
+    });
+    return m;
+  }
+
+  /* ============ ارتباط با سرور ============ */
   function api(path, method, body){
     return fetch(API_BASE + path, {
       method: method,
@@ -335,99 +523,69 @@
       });
     });
   }
-
-  /* ============ ذخیره در فضای ابری ============ */
-  function persist(){
-    if(!token){ showSync("offline"); saveCache(); return; }
-    showSync("saving");
-
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(function(){
-      api("/api/state", "POST", { data: JSON.stringify({ tasks: tasks, schedule: schedule }) })
-        .then(function(res){
-          lastUpdatedAt = res.updated_at || Date.now();
-          showSync("saved");
-        })
-        .catch(function(err){
-          if(err && err.status === 401){ showLoginScreen(); return; } // نشست منقضی شده
-          showSync("error");
-          saveCache();
-          console.error(err);
-        });
-    }, 400);
+  function apiHead(){
+    return fetch(API_BASE + "/api/state", {
+      method: "HEAD",
+      headers: token ? { "Authorization": "Bearer " + token } : {}
+    });
   }
 
-  /* ============ بارگذاری داده‌ها از سرور ============ */
-  function loadState(){
-    if(!token){ showLoginScreen(); return; }
-    syncText.textContent = "در حال بارگذاری…";
+  /* ============ صف آفلاین و همگام‌سازی خودکار (۱) ============ */
+  function scheduleSync(){
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(flushSync, 400);
+  }
+  function flushSync(){
+    if(!token || syncing) return;
+    if(!navigator.onLine){ dirty = true; showSync("offline"); return; }
+    syncing = true;
     showSync("saving");
-
-    api("/api/state", "GET")
+    api("/api/state", "POST", { data: state, base: lastUpdatedAt })
       .then(function(res){
-        if(res.data == null){
-          // اولین بار: آیا دادهٔ قدیمی در مرورگر این دستگاه هست؟
-          var oldT = loadLocal("weekly_tasks_v1");
-          var oldS = loadLocal("weekly_schedule_v1");
-          if(oldT || oldS){
-            tasks = oldT || [];
-            schedule = oldS || {};
-            renderTasks(); renderSchedule();
-            persist(); // در فضای ابری ذخیره می‌شود
-          } else {
-            tasks = []; schedule = {};
-            renderTasks(); renderSchedule();
-          }
-        } else {
-          var d = {};
-          try{ d = JSON.parse(res.data) || {}; }catch(e){ d = {}; }
-          tasks = Array.isArray(d.tasks) ? d.tasks : [];
-          schedule = (d.schedule && typeof d.schedule === "object") ? d.schedule : {};
-          renderTasks(); renderSchedule();
-        }
-        lastUpdatedAt = res.updated_at || 0;
-        showSync("saved");
-        saveCache();
-        startPolling();
+        syncing = false; dirty = false; retryCount = 0;
+        lastUpdatedAt = res.updated_at || lastUpdatedAt;
+        showSync("saved"); saveCache();
       })
       .catch(function(err){
+        syncing = false;
         if(err && err.status === 401){ showLoginScreen(); return; }
-        // آفلاین یا سرور در دسترس نیست: آخرین دادهٔ ذخیره‌شده محلی را نشان بده
-        var cache = loadLocal(CACHE_KEY);
-        if(cache){
-          tasks = Array.isArray(cache.tasks) ? cache.tasks : [];
-          schedule = (cache.schedule && typeof cache.schedule === "object") ? cache.schedule : {};
-          renderTasks(); renderSchedule();
-        }
-        showSync("error");
-        startPolling(); // وقتی اینترنت برگشت، دوباره تلاش می‌کند
+        showSync("error"); saveCache();
+        retryCount = Math.min(retryCount + 1, 6);
+        setTimeout(function(){ if(dirty) flushSync(); }, Math.min(60000, 1500 * Math.pow(2, retryCount)));
       });
   }
 
-  /* ============ همگام‌سازی دوره‌ای بین دستگاه‌ها ============ */
-  function startPolling(){
-    if(pollTimer) clearInterval(pollTimer);
-    pollTimer = setInterval(function(){
-      if(!token) return;
-      // اگر کاربر در حال تایپ در جدول است، رندر مجدد نکنیم
-      var ae = document.activeElement;
-      if(ae && ae.tagName === "TEXTAREA") return;
-
-      api("/api/state", "GET")
-        .then(function(res){
-          if((res.updated_at || 0) > lastUpdatedAt){
-            var d = {};
-            try{ d = JSON.parse(res.data) || {}; }catch(e){ d = {}; }
-            tasks = Array.isArray(d.tasks) ? d.tasks : [];
-            schedule = (d.schedule && typeof d.schedule === "object") ? d.schedule : {};
-            lastUpdatedAt = res.updated_at || 0;
-            renderTasks(); renderSchedule();
-            saveCache();
-          }
-        })
-        .catch(function(){ /* بی‌اثر؛ دورهٔ بعدی تلاش می‌کند */ });
-    }, 10000); // هر ۱۰ ثانیه
+  /* ============ Undo (۲) ============ */
+  var undoBtn = document.getElementById("undoBtn");
+  function pushUndo(){
+    var n = Date.now();
+    if(n - lastUndoPush < 1500) return;   /* تغییرات سریع یک گام */
+    lastUndoPush = n;
+    undoStack.push(JSON.stringify(state));
+    if(undoStack.length > 20) undoStack.shift();
+    undoBtn.disabled = false;
   }
+  function doUndo(){
+    if(!undoStack.length) return;
+    var snap = undoStack.pop();
+    if(!snap) return;
+    var collapsed = Object.keys(state.lists).length === 0;
+    state = ensureLists(JSON.parse(snap));
+    if(!state.lists[currentList]) currentList = Object.keys(state.lists)[0];
+    if(collapsed) undoStack = [];
+    undoBtn.disabled = !undoStack.length;
+    markDirty(); refresh();
+    toast(" تغییر برگردانده شد");
+  }
+  undoBtn.addEventListener("click", doUndo);
+
+  /* ============ wrapper تغییرات ============ */
+  function edit(fn, what){
+    pushUndo(); fn(); markDirty();
+    if(what === "tasks"){ renderTasks(); updateProgress(); }
+    else if(what) refresh();
+  }
+  function markDirty(){ dirty = true; saveCache(); scheduleSync(); }
 
   /* ============ تاریخ امروز ============ */
   var now = new Date();
@@ -438,110 +596,383 @@
     return map[now.getDay()];
   })();
 
-  /* ============ چک‌لیست تکالیف ============ */
-  var listEl = document.getElementById("taskList");
-  var emptyEl = document.getElementById("emptyMsg");
+  /* ============ چیدمان ============ */
+  function fillDaySelect(sel, selVal){
+    sel.innerHTML = "";
+    DAYS.forEach(function(d){
+      var o = document.createElement("option");
+      o.value = d; o.textContent = d;
+      if(d === selVal) o.selected = true;
+      sel.appendChild(o);
+    });
+  }
+
+  function renderListSelector(){
+    var sel = document.getElementById("listSelect");
+    var prev = sel.value;
+    sel.innerHTML = "";
+    Object.keys(state.lists).forEach(function(id){
+      var o = document.createElement("option");
+      o.value = id; o.textContent = state.lists[id].name || "لیست";
+      sel.appendChild(o);
+    });
+    if(!state.lists[currentList]) currentList = Object.keys(state.lists)[0];
+    sel.value = currentList;
+    if(prev === currentList) { /* noop */ }
+  }
+
+  function sortedTasks(){
+    var l = listById(currentList);
+    var ord = state.order[currentList] || [];
+    var byId = {};
+    l.tasks.forEach(function(t){ byId[t.id] = t; });
+    var out = [];
+    ord.forEach(function(id){ if(byId[id]){ out.push(byId[id]); delete byId[id]; } });
+    Object.keys(byId).forEach(function(id){ out.push(byId[id]); });
+    return out;
+  }
 
   function renderTasks(){
+    var listEl = document.getElementById("taskList");
+    var emptyEl = document.getElementById("emptyMsg");
     listEl.innerHTML = "";
-    var visible = tasks.filter(function(t){
-      if(filter === "done") return t.done;
+    var all = sortedTasks();
+    var visible = all.filter(function(t){
+      if(filter === "done") return !!t.done;
       if(filter === "pending") return !t.done;
+      if(filter === "today") return t.day === todayName;
       return true;
     });
-    var pOrder = {high:0, mid:1, low:2};
-    visible.sort(function(a,b){ return (a.done - b.done) || (pOrder[a.priority] - pOrder[b.priority]); });
 
     visible.forEach(function(t){
       var li = document.createElement("li");
       li.className = "task" + (t.done ? " done" : "");
+      li.dataset.tid = t.id;
+      li.draggable = !selectMode && editingId !== t.id;
 
-      var cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = !!t.done;
-      cb.addEventListener("change", function(){
-        t.done = cb.checked;
-        persist();
-        renderTasks();
-      });
+      if(selectMode){
+        var sc = document.createElement("input");
+        sc.type = "checkbox"; sc.className = "selcb";
+        sc.checked = !!selected[t.id];
+        sc.addEventListener("change", function(){
+          if(sc.checked) selected[t.id] = true; else delete selected[t.id];
+          updateBulkBar();
+        });
+        li.appendChild(sc);
+      }
 
-      var body = document.createElement("div");
-      body.className = "task-body";
+      if(editingId === t.id){
+        /* ویرایش درجا (۷) */
+        var grid = document.createElement("div");
+        grid.className = "edit-grid";
+        var ti = document.createElement("input");
+        ti.type = "text"; ti.value = t.title || ""; ti.placeholder = "عنوان";
+        var td = document.createElement("select"); fillDaySelect(td, t.day || DAYS[0]);
+        var ts = document.createElement("input");
+        ts.type = "text"; ts.value = t.subject || ""; ts.placeholder = "درس";
+        var tp = document.createElement("select");
+        ["high","mid","low"].forEach(function(p){
+          var o = document.createElement("option");
+          o.value = p; o.textContent = "اولویت: " + P_LABEL[p];
+          if((t.priority||"mid") === p) o.selected = true;
+          tp.appendChild(o);
+        });
+        var save = document.createElement("button");
+        save.className = "btn-add"; save.textContent = "ذخیره";
+        var cancel = document.createElement("button");
+        cancel.className = "mini-btn"; cancel.textContent = "لغو";
+        save.addEventListener("click", function(){
+          var v = ti.value.trim();
+          if(!v) return;
+          edit(function(){
+            t.title = v; t.day = td.value; t.subject = ts.value.trim(); t.priority = tp.value; t.ts = nowTs();
+          }, "tasks");
+          editingId = null; moveId = null; renderTasks();
+        });
+        cancel.addEventListener("click", function(){
+          editingId = null; renderTasks();
+        });
+        [ti, td, ts, tp, save, cancel].forEach(function(el){ grid.appendChild(el); });
+        li.appendChild(grid);
+        li.draggable = false;
+        setTimeout(function(){ ti.focus(); }, 30);
+      } else {
+        var cb = document.createElement("input");
+        cb.type = "checkbox"; cb.checked = !!t.done;
+        cb.addEventListener("change", function(){
+          edit(function(){ t.done = cb.checked; t.ts = nowTs(); }, "tasks");
+        });
+        li.appendChild(cb);
 
-      var title = document.createElement("div");
-      title.className = "task-title";
-      title.textContent = t.title;
+        var body = document.createElement("div");
+        body.className = "task-body";
+        var title = document.createElement("div");
+        title.className = "task-title";
+        title.textContent = t.title;
+        var meta = document.createElement("div");
+        meta.className = "task-meta";
+        meta.innerHTML =
+          '<span class="tag day">' + esc(t.day) + '</span>' +
+          (t.subject ? '<span class="tag subject">' + esc(t.subject) + '</span>' : '') +
+          '<span class="tag ' + P_CLASS[t.priority||"mid"] + '">' + P_LABEL[t.priority||"mid"] + '</span>';
+        body.appendChild(title); body.appendChild(meta);
+        body.addEventListener("click", function(){
+          if(!selectMode) startEdit(t.id);
+        });
+        li.appendChild(body);
 
-      var meta = document.createElement("div");
-      meta.className = "task-meta";
-      meta.innerHTML =
-        '<span class="tag day">' + escapeHtml(t.day) + '</span>' +
-        (t.subject ? '<span class="tag subject">' + escapeHtml(t.subject) + '</span>' : '') +
-        '<span class="tag ' + P_CLASS[t.priority] + '">' + P_LABEL[t.priority] + '</span>';
+        var acts = document.createElement("div");
+        acts.className = "task-actions";
+        acts.appendChild(iconBtn("✎", "ویرایش", false, function(){ startEdit(t.id); }));
+        acts.appendChild(iconBtn("⧉", "انتقال یا کپی به روز دیگر", false, function(){
+          moveId = (moveId === t.id) ? null : t.id; editingId = null; renderTasks();
+        }));
+        acts.appendChild(iconBtn("🗑", "حذف", true, function(){
+          edit(function(){
+            tomb(t.id);
+            listById(currentList).tasks = listById(currentList).tasks.filter(function(x){ return x.id !== t.id; });
+            var ord = state.order[currentList] || [];
+            state.order[currentList] = ord.filter(function(x){ return x !== t.id; });
+          }, "tasks");
+        }));
+        li.appendChild(acts);
 
-      body.appendChild(title);
-      body.appendChild(meta);
-
-      var del = document.createElement("button");
-      del.className = "btn-del";
-      del.textContent = "حذف";
-      del.addEventListener("click", function(){
-        tasks = tasks.filter(function(x){ return x.id !== t.id; });
-        persist();
-        renderTasks();
-      });
-
-      li.appendChild(cb);
-      li.appendChild(body);
-      li.appendChild(del);
+        if(moveId === t.id){
+          var strip = document.createElement("div");
+          strip.className = "move-strip";
+          var lbl = document.createElement("span");
+          lbl.textContent = "انتقال مستقیم به: (برای کپی، ابتدا تیک «کپی» را بزنید)";
+          strip.appendChild(lbl);
+          var copyChk = document.createElement("label");
+          copyChk.style.cssText = "display:inline-flex;align-items:center;gap:4px;min-height:36px;";
+          var cin = document.createElement("input");
+          cin.type = "checkbox"; cin.id = "copychk_" + t.id;
+          copyChk.appendChild(cin);
+          copyChk.appendChild(document.createTextNode("کپی"));
+          strip.appendChild(copyChk);
+          DAYS.forEach(function(d){
+            var b = document.createElement("button");
+            b.type = "button"; b.className = "mini-day"; b.textContent = d;
+            b.addEventListener("click", function(){
+              edit(function(){
+                if(cin.checked){
+                  var c = { id:newId(), title:t.title, day:d, subject:t.subject, priority:t.priority, done:false, ts:nowTs() };
+                  listById(currentList).tasks.push(c);
+                } else {
+                  t.day = d; t.ts = nowTs();
+                }
+              }, "tasks");
+              moveId = null; renderTasks();
+              toast(cin.checked ? "کپی ساخته شد" : "منتقل شد");
+            });
+            strip.appendChild(b);
+          });
+          li.appendChild(strip);
+          li.draggable = false;
+        }
+      }
       listEl.appendChild(li);
     });
 
     emptyEl.style.display = visible.length ? "none" : "block";
     updateProgress();
+    updateBulkBar();
+  }
+
+  function iconBtn(glyph, title, danger, fn){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "icon-btn" + (danger ? " danger" : "");
+    b.textContent = glyph; b.title = title;
+    b.addEventListener("click", fn);
+    return b;
+  }
+
+  function startEdit(id){ editingId = id; moveId = null; renderTasks(); }
+
+  function tomb(id){
+    var has = state.tomb.some(function(x){ return x.id === id; });
+    if(!has){ state.tomb.push({ id:id, ts:nowTs() });
+      if(state.tomb.length > 200) state.tomb = state.tomb.slice(-200); }
   }
 
   function updateProgress(){
-    var total = tasks.length;
-    var done = tasks.filter(function(t){ return t.done; }).length;
+    var total = 0, done = 0;
+    Object.keys(state.lists).forEach(function(lid){
+      (state.lists[lid].tasks||[]).forEach(function(t){
+        total++; if(t.done) done++;
+      });
+    });
     document.getElementById("doneCount").textContent = faDigits(done);
     document.getElementById("totalCount").textContent = faDigits(total);
     document.getElementById("progressFill").style.width = total ? ((done/total)*100).toFixed(1) + "%" : "0%";
   }
 
+  /* ============ افزودن وظیفه + ورودی صوتی (۶) ============ */
+  fillDaySelect(document.getElementById("taskDay"), DAYS[0]);
+  fillDaySelect(document.getElementById("bulkDay"), DAYS[0]);
+
   document.getElementById("addForm").addEventListener("submit", function(e){
     e.preventDefault();
-    var title = document.getElementById("taskTitle").value.trim();
+    var titleEl = document.getElementById("taskTitle");
+    var title = titleEl.value.trim();
     if(!title) return;
-    tasks.push({
-      id: Date.now() + Math.random().toString(16).slice(2),
-      title: title,
-      day: document.getElementById("taskDay").value,
-      subject: document.getElementById("taskSubject").value.trim(),
-      priority: document.getElementById("taskPriority").value,
-      done: false
-    });
-    persist();
+    edit(function(){
+      listById(currentList).tasks.push({
+        id: newId(), title: title,
+        day: document.getElementById("taskDay").value,
+        subject: document.getElementById("taskSubject").value.trim(),
+        priority: document.getElementById("taskPriority").value,
+        done: false, ts: nowTs()
+      });
+    }, "tasks");
     e.target.reset();
     document.getElementById("taskPriority").value = "mid";
     renderTasks();
+    titleEl.focus();
   });
 
-  document.querySelectorAll(".chip").forEach(function(chip){
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var micBtn = document.getElementById("micBtn");
+  var rec = null, recording = false;
+  if(SR){
+    micBtn.style.display = "inline-flex";
+    rec = new SR();
+    rec.lang = "fa-IR"; rec.interimResults = false; rec.maxAlternatives = 1;
+    rec.onresult = function(ev){
+      var t = ev.results[0][0].transcript;
+      var el = document.getElementById("taskTitle");
+      el.value = el.value ? (el.value + " " + t) : t;
+      el.focus();
+      toast("گفتار ثبت شد ✓");
+    };
+    rec.onerror = function(){ toast("ورودی صوتی در دسترس نیست"); };
+    rec.onend = function(){ recording = false; micBtn.classList.remove("recording"); };
+    micBtn.addEventListener("click", function(){
+      if(recording){ rec.stop(); return; }
+      try{ rec.start(); recording = true; micBtn.classList.add("recording"); }catch(err){ rec.stop(); }
+    });
+  }
+
+  /* ============ فیلترها و نمای امروز (۱۱) ============ */
+  document.querySelectorAll(".chip[data-filter]").forEach(function(chip){
     chip.addEventListener("click", function(){
-      document.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("active"); });
+      document.querySelectorAll(".chip[data-filter]").forEach(function(c){ c.classList.remove("active"); });
       chip.classList.add("active");
       filter = chip.getAttribute("data-filter");
       renderTasks();
     });
   });
 
-  document.getElementById("clearAll").addEventListener("click", function(){
-    if(confirm("همهٔ تکالیف و محتوای جدول پاک شود؟")){
-      tasks = []; schedule = {};
-      persist();
-      renderTasks(); renderSchedule();
-    }
+  document.getElementById("todayOnlyBtn").addEventListener("click", function(){
+    todayOnly = !todayOnly;
+    document.getElementById("todayOnlyBtn").classList.toggle("active", todayOnly);
+    renderSchedule();
+  });
+
+  /* ============ انتخاب چندتایی و عملیات گروهی (۹) ============ */
+  var selectModeBtn = document.getElementById("selectModeBtn");
+  selectModeBtn.addEventListener("click", function(){
+    selectMode = !selectMode;
+    selected = {};
+    selectModeBtn.classList.toggle("active", selectMode);
+    document.body.classList.toggle("bulk-active", selectMode);
+    renderTasks();
+  });
+
+  function updateBulkBar(){
+    var n = Object.keys(selected).length;
+    document.getElementById("selCount").textContent = faDigits(n) + " مورد انتخاب شده";
+    document.getElementById("bulkDay").style.display = n ? "inline-block" : "none";
+    document.getElementById("bulkMove").style.display = n ? "inline-block" : "none";
+    document.getElementById("bulkCopy").style.display = n ? "inline-block" : "none";
+  }
+  function selectedTasks(){
+    var out = [];
+    Object.keys(state.lists).forEach(function(lid){
+      (state.lists[lid].tasks||[]).forEach(function(t){ if(selected[t.id]) out.push(t); });
+    });
+    return out;
+  }
+  function exitSelect(){
+    selectMode = false; selected = {};
+    selectModeBtn.classList.remove("active");
+    document.body.classList.remove("bulk-active");
+    renderTasks();
+  }
+  document.getElementById("bulkDone").addEventListener("click", function(){
+    edit(function(){ selectedTasks().forEach(function(t){ t.done = true; t.ts = nowTs(); }); }, "all");
+    exitSelect(); toast("علامت زده شد");
+  });
+  document.getElementById("bulkUndone").addEventListener("click", function(){
+    edit(function(){ selectedTasks().forEach(function(t){ t.done = false; t.ts = nowTs(); }); }, "all");
+    exitSelect(); toast("علامت برداشته شد");
+  });
+  document.getElementById("bulkDel").addEventListener("click", function(){
+    if(!confirm("تکالیف انتخاب‌شده حذف شوند؟")) return;
+    edit(function(){
+      selectedTasks().forEach(function(t){
+        tomb(t.id);
+        if(state.lists[t._lid]){}
+      });
+      Object.keys(state.lists).forEach(function(lid){
+        state.lists[lid].tasks = state.lists[lid].tasks.filter(function(t){
+          if(selected[t.id]){ tomb(t.id); return false; }
+          return true;
+        });
+      });
+    }, "all");
+    exitSelect(); toast("حذف شد");
+  });
+  document.getElementById("bulkMove").addEventListener("click", function(){
+    var d = document.getElementById("bulkDay").value;
+    edit(function(){ selectedTasks().forEach(function(t){ t.day = d; t.ts = nowTs(); }); }, "all");
+    exitSelect(); toast("منتقل شد به " + d);
+  });
+  document.getElementById("bulkCopy").addEventListener("click", function(){
+    var d = document.getElementById("bulkDay").value;
+    edit(function(){
+      selectedTasks().forEach(function(t){
+        listById(currentList).tasks.push({
+          id:newId(), title:t.title, day:d, subject:t.subject, priority:t.priority, done:false, ts:nowTs()
+        });
+      });
+    }, "all");
+    exitSelect(); toast("کپی شد به " + d);
+  });
+  document.getElementById("bulkCancel").addEventListener("click", exitSelect);
+
+  /* ============ چند لیست (۱۰) ============ */
+  document.getElementById("listSelect").addEventListener("change", function(e){
+    currentList = e.target.value;
+    editingId = null; moveId = null; selected = {};
+    renderTasks();
+  });
+  document.getElementById("newListBtn").addEventListener("click", function(){
+    var name = prompt("نام لیست جدید:", "لیست " + (Object.keys(state.lists).length + 1));
+    if(!name || !name.trim()) return;
+    var id = newId();
+    edit(function(){ listById(id); state.lists[id].name = name.trim(); currentList = id; }, null);
+    renderListSelector(); renderTasks(); toast("لیست ساخته شد");
+  });
+  document.getElementById("renameListBtn").addEventListener("click", function(){
+    var cur = listById(currentList);
+    var name = prompt("نام جدید لیست:", cur.name);
+    if(!name || !name.trim()) return;
+    edit(function(){ listById(currentList).name = name.trim(); }, null);
+    renderListSelector(); toast("نام تغییر کرد");
+  });
+  document.getElementById("delListBtn").addEventListener("click", function(){
+    if(Object.keys(state.lists).length <= 1){ toast("حداقل یک لیست باید باقی بماند"); return; }
+    if(!confirm("لیست «" + listById(currentList).name + "» با همهٔ تکالیفش حذف شود؟ (با ↩ قابل بازگردانی است)")) return;
+    var lid = currentList;
+    edit(function(){
+      (state.lists[lid].tasks||[]).forEach(function(t){ tomb(t.id); });
+      delete state.lists[lid];
+      delete state.order[lid];
+      currentList = Object.keys(state.lists)[0];
+    }, "all");
+    toast("لیست حذف شد");
   });
 
   /* ============ جدول برنامه هفتگی ============ */
@@ -552,9 +983,26 @@
     DAYS.forEach(function(day){
       var tr = document.createElement("tr");
       if(day === todayName) tr.className = "today-row";
+      if(todayOnly && day !== todayName) tr.classList.add("hide-day");
 
       var th = document.createElement("th");
       th.textContent = day;
+      th.dataset.day = day;
+      /* محل رها کردن کشیدن وظیفه (۱۲) */
+      th.addEventListener("dragover", function(e){
+        if(dragId){ e.preventDefault(); th.classList.add("drop-ok"); }
+      });
+      th.addEventListener("dragleave", function(){ th.classList.remove("drop-ok"); });
+      th.addEventListener("drop", function(e){
+        e.preventDefault(); th.classList.remove("drop-ok");
+        if(!dragId) return;
+        var t = findTask(dragId);
+        if(t && t.day !== day){
+          edit(function(){ t.day = day; t.ts = nowTs(); }, "tasks");
+          toast("به " + day + " منتقل شد");
+        }
+        dragId = null;
+      });
       tr.appendChild(th);
 
       SLOTS.forEach(function(slot){
@@ -563,10 +1011,10 @@
         var ta = document.createElement("textarea");
         ta.placeholder = "—";
         var key = day + "|" + slot;
-        ta.value = schedule[key] || "";
+        var entry = state.schedule[key] || { ts:0, text:"" };
+        ta.value = entry.text || "";
         ta.addEventListener("input", function(){
-          schedule[key] = ta.value;
-          persist();
+          edit(function(){ state.schedule[key] = { ts: nowTs(), text: ta.value }; }, null);
         });
         td.appendChild(ta);
         tr.appendChild(td);
@@ -574,6 +1022,220 @@
       schedBody.appendChild(tr);
     });
   }
+
+  function findTask(id){
+    var found = null;
+    Object.keys(state.lists).forEach(function(lid){
+      (state.lists[lid].tasks||[]).forEach(function(t){ if(t.id === id) found = t; });
+    });
+    return found;
+  }
+
+  /* ============ کشیدن و رها کردن برای مرتب‌سازی (۱۲) ============ */
+  var dragId = null;
+  var listEl = document.getElementById("taskList");
+  listEl.addEventListener("dragstart", function(e){
+    var li = e.target.closest("li[data-tid]");
+    if(!li){ e.preventDefault(); return; }
+    dragId = li.dataset.tid;
+    li.classList.add("dragging");
+    try{ e.dataTransfer.setData("text/plain", dragId); }catch(err){}
+  });
+  listEl.addEventListener("dragend", function(e){
+    dragId = null;
+    listEl.querySelectorAll(".dragging").forEach(function(li){ li.classList.remove("dragging"); });
+  });
+  listEl.addEventListener("dragover", function(e){
+    if(dragId) e.preventDefault();
+  });
+  listEl.addEventListener("drop", function(e){
+    e.preventDefault();
+    if(!dragId) return;
+    var li = e.target.closest("li[data-tid]");
+    var afterId = li ? li.dataset.tid : null;
+    var id = dragId; dragId = null;
+    var arr = sortedTasks().map(function(t){ return t.id; });
+    var from = arr.indexOf(id);
+    if(from < 0) return;
+    arr.splice(from, 1);
+    var to = afterId ? arr.indexOf(afterId) : -1;
+    if(to < 0) arr.push(id); else arr.splice(to, 0, id);
+    edit(function(){ state.order[currentList] = arr; }, null);
+    renderTasks();
+  });
+
+  /* ============ جمع‌شدن کارت‌ها (۱۲) ============ */
+  var collapsed = loadLocal(COLLAPSE_KEY) || {};
+  document.querySelectorAll(".collapse-btn").forEach(function(btn){
+    var card = document.getElementById(btn.dataset.card);
+    if(card && collapsed[btn.dataset.card]){ card.classList.add("collapsed"); btn.textContent = "▸"; }
+    btn.addEventListener("click", function(){
+      if(!card) return;
+      var isC = card.classList.toggle("collapsed");
+      btn.textContent = isC ? "▸" : "▾";
+      collapsed[btn.dataset.card] = isC;
+      try{ localStorage.setItem(COLLAPSE_KEY, JSON.stringify(collapsed)); }catch(e){}
+    });
+  });
+
+  /* ============ اشتراک‌گذاری برنامهٔ امروز (۴) ============ */
+  document.getElementById("shareBtn").addEventListener("click", function(){
+    var lines = ["📅 برنامهٔ امروز — " + faDigits(faDate), ""];
+    var todays = [];
+    Object.keys(state.lists).forEach(function(lid){
+      (state.lists[lid].tasks||[]).forEach(function(t){ if(t.day === todayName) todays.push(t); });
+    });
+    if(todays.length){
+      lines.push("📝 تکالیف:");
+      todays.forEach(function(t){ lines.push((t.done ? "✓ " : "○ ") + t.title); });
+      lines.push("");
+    }
+    SLOTS.forEach(function(slot){
+      var e = state.schedule[todayName + "|" + slot];
+      if(e && e.text) lines.push("🕒 " + slot + ": " + e.text);
+    });
+    if(lines.length <= 2){ toast("چیزی برای امروز ثبت نشده"); return; }
+    var text = lines.join("\n");
+    if(navigator.share){
+      navigator.share({ title:"برنامهٔ امروز", text:text }).catch(function(){});
+    } else if(navigator.clipboard){
+      navigator.clipboard.writeText(text).then(function(){ toast("در کلیپ‌بورد کپی شد"); }, function(){ toast("اشتراک‌گذاری ممکن نشد"); });
+    } else {
+      toast("مرورگر از اشتراک‌گذاری پشتیبانی نمی‌کند");
+    }
+  });
+
+  /* ============ میانبرهای کیبورد (۵) ============ */
+  document.addEventListener("keydown", function(e){
+    var ae = document.activeElement;
+    var typing = ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.tagName === "SELECT" || ae.isContentEditable);
+
+    if((e.ctrlKey || e.metaKey) && (e.key === "z" || e.key === "Z")){
+      if(!typing){ e.preventDefault(); doUndo(); }
+      return;
+    }
+    if(e.key === "Escape"){
+      var modal = document.getElementById("settingsModal");
+      if(modal.classList.contains("open")){ modal.classList.remove("open"); }
+      else if(selectMode){ exitSelect(); }
+      else if(editingId != null || moveId != null){ editingId = null; moveId = null; renderTasks(); }
+      return;
+    }
+    if(typing) return;
+    if(e.key === "/"){
+      e.preventDefault();
+      var el = document.getElementById("taskTitle");
+      if(el) el.focus();
+    } else if(e.key === "t" || e.key === "T"){
+      document.querySelector('.chip[data-filter="today"]').click();
+    }
+  });
+
+  window.addEventListener("online", function(){ showSync("saving"); flushSync(); });
+  window.addEventListener("offline", function(){ showSync("offline"); });
+
+  document.getElementById("clearAll").addEventListener("click", function(){
+    if(!confirm("همهٔ تکالیف و محتوای جدول پاک شود؟ (با ↩ قابل بازگردانی است)")) return;
+    edit(function(){
+      Object.keys(state.lists).forEach(function(lid){
+        (state.lists[lid].tasks||[]).forEach(function(t){ tomb(t.id); });
+        state.lists[lid].tasks = [];
+      });
+      state.schedule = {};
+    }, "all");
+    toast("پاک شد");
+  });
+
+  /* ============ تنظیمات: رمز، پشتیبان‌ها، خروج همه (۱۳/۱۵) ============ */
+  var settingsModal = document.getElementById("settingsModal");
+  document.getElementById("settingsBtn").addEventListener("click", function(){
+    settingsModal.classList.add("open");
+    loadBackups();
+  });
+  document.getElementById("closeSettingsBtn").addEventListener("click", function(){
+    settingsModal.classList.remove("open");
+  });
+  settingsModal.addEventListener("click", function(e){
+    if(e.target === settingsModal) settingsModal.classList.remove("open");
+  });
+
+  document.getElementById("pwForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var cur = document.getElementById("pwCurrent").value;
+    var nw = document.getElementById("pwNew").value;
+    var cf = document.getElementById("pwConfirm").value;
+    var msg = document.getElementById("pwMsg");
+    if(nw.length < 6){ msg.textContent = "رمز جدید باید حداقل ۶ کاراکتر باشد"; msg.style.color = "#dc2626"; return; }
+    if(nw !== cf){ msg.textContent = "رمز جدید و تکرارش یکی نیستند"; msg.style.color = "#dc2626"; return; }
+    msg.textContent = ""; msg.style.color = "";
+    var btn = document.getElementById("pwSubmit");
+    btn.disabled = true; btn.textContent = "در حال ذخیره…";
+    api("/api/password", "POST", { current: cur, next: nw })
+      .then(function(){
+        settingsModal.classList.remove("open");
+        btn.disabled = false; btn.textContent = "تغییر رمز";
+        e.target.reset();
+        toast("رمز تغییر کرد — از همهٔ دستگاه‌ها دوباره وارد شوید");
+        setTimeout(showLoginScreen, 1400);
+      })
+      .catch(function(err){
+        btn.disabled = false; btn.textContent = "تغییر رمز";
+        msg.textContent = (err && err.error) ? err.error : "خطا در ارتباط با سرور";
+        msg.style.color = "#dc2626";
+      });
+  });
+
+  document.getElementById("logoutAllBtn").addEventListener("click", function(){
+    if(!confirm("از همهٔ دستگاه‌ها خارج می‌شوید و نشست‌ها باطل می‌شوند. ادامه؟")) return;
+    api("/api/logout-all", "POST")
+      .then(function(){ settingsModal.classList.remove("open"); toast("نشست‌ها باطل شدند"); setTimeout(showLoginScreen, 1200); })
+      .catch(function(err){ toast((err && err.error) || "خطا"); });
+  });
+
+  function loadBackups(){
+    var ul = document.getElementById("backupList");
+    ul.innerHTML = '<li class="when">در حال بارگذاری…</li>';
+    api("/api/snapshots", "GET")
+      .then(function(res){
+        ul.innerHTML = "";
+        var rows = (res && res.items) || [];
+        if(!rows.length){ ul.innerHTML = '<li class="when">هنوز پشتیبنی ساخته نشده — با هر ذخیره یک نسخه می‌سازد.</li>'.replace("پشتیبنی","پشتیبان"); return; }
+        rows.forEach(function(r){
+          var li = document.createElement("li");
+          var when = document.createElement("span");
+          when.className = "when";
+          when.textContent = new Date(r.created_at * 1000).toLocaleString("fa-IR", { dateStyle:"medium", timeStyle:"short" });
+          var btns = document.createElement("span");
+          var dl = document.createElement("button");
+          dl.type = "button"; dl.className = "mini-btn"; dl.textContent = "دانلود";
+          dl.addEventListener("click", function(){ downloadJson(r.data, "todo-backup-" + r.id + ".json"); });
+          var rs = document.createElement("button");
+          rs.type = "button"; rs.className = "mini-btn"; rs.textContent = "بازیابی";
+          rs.addEventListener("click", function(){
+            if(!confirm("داده‌ها به این نسخهٔ پشتیبان بازگردانده شود؟")) return;
+            api("/api/restore", "POST", { id: r.id })
+              .then(function(){ settingsModal.classList.remove("open"); toast("بازیابی شد"); loadState(); })
+              .catch(function(err){ toast((err && err.error) || "خطا در بازیابی"); });
+          });
+          btns.appendChild(dl); btns.appendChild(rs);
+          li.appendChild(when); li.appendChild(btns);
+          ul.appendChild(li);
+        });
+      })
+      .catch(function(){ ul.innerHTML = '<li class="when">خطا در بارگذاری پشتیban</li>'.replace("پشتیban","پشتیبان‌ها"); });
+  }
+
+  function downloadJson(text, name){
+    var blob = new Blob([text], { type:"application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+  }
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    downloadJson(JSON.stringify(state, null, 2), "todo-data.json");
+  });
 
   /* ============ ورود / احراز هویت ============ */
   var loginWrap = document.getElementById("loginWrap");
@@ -595,7 +1257,14 @@
     loginWrap.style.display = "none";
     mainWrap.style.display = "block";
     document.getElementById("userEmail").textContent = "حساب شخصی";
-    renderTasks(); renderSchedule();
+    refresh();
+  }
+
+  function refresh(){
+    renderListSelector();
+    renderTasks();
+    renderSchedule();
+    updateProgress();
   }
 
   document.getElementById("loginForm").addEventListener("submit", function(e){
@@ -611,6 +1280,7 @@
       .then(function(res){
         token = res.token;
         try{ localStorage.setItem(TOKEN_KEY, token); }catch(err){}
+        retryCount = 0;
         showApp();
         loadState();
       })
@@ -621,9 +1291,80 @@
       });
   });
 
-  document.getElementById("logoutBtn").addEventListener("click", function(){
-    showLoginScreen();
-  });
+  document.getElementById("logoutBtn").addEventListener("click", showLoginScreen);
+
+  /* ============ بارگذاری و همگام‌سازی (۳/۱۶) ============ */
+  function loadState(){
+    if(!token){ showLoginScreen(); return; }
+    showSync("saving");
+    syncText.textContent = "در حال بارگذاری…";
+
+    api("/api/state", "GET")
+      .then(function(res){
+        lastUpdatedAt = res.updated_at || 0;
+        if(res.data == null){
+          var oldT = loadLocal("weekly_tasks_v1");
+          var oldS = loadLocal("weekly_schedule_v1");
+          state = migrateState((oldT||oldS) ? { tasks: oldT||[], schedule: oldS||{} } : null);
+          refresh(); saveCache();
+          if(oldT || oldS) scheduleSync();
+        } else {
+          var remote = migrateState(parseSafe(res.data));
+          if(!remote) remote = migrateState(null);
+          var cache = loadLocal(CACHE_KEY);
+          var local = (cache && cache.state) ? migrateState(cache.state) : null;
+          state = local ? mergeStates(local, remote) : ensureLists(JSON.parse(JSON.stringify(remote)));
+          if(!state.lists[currentList]) currentList = Object.keys(state.lists)[0];
+          refresh(); saveCache();
+          if(JSON.stringify(state) !== JSON.stringify(remote)) scheduleSync();
+        }
+        showSync("saved");
+        startPolling();
+      })
+      .catch(function(err){
+        if(err && err.status === 401){ showLoginScreen(); return; }
+        var cache = loadLocal(CACHE_KEY);
+        state = (cache && cache.state) ? migrateState(cache.state) : migrateState(null);
+        if(!state.lists[currentList]) currentList = Object.keys(state.lists)[0];
+        refresh();
+        showSync("error");
+        startPolling();
+      });
+  }
+
+  function startPolling(){
+    if(pollTimer) clearInterval(pollTimer);
+    pollTimer = setInterval(function(){
+      if(!token || syncing || document.hidden) return;
+      var ae = document.activeElement;
+      if(ae && (ae.tagName === "TEXTAREA" || ae.tagName === "INPUT")) return;
+
+      apiHead()
+        .then(function(r){
+          var s = r.headers.get("X-Updated-At");
+          if(s && Number(s) > lastUpdatedAt) pullRemote();
+        })
+        .catch(function(){ /* دورهٔ بعدی تلاش می‌کند */ });
+    }, 10000);
+  }
+
+  function pullRemote(){
+    api("/api/state", "GET")
+      .then(function(res){
+        var remote = migrateState(parseSafe(res.data));
+        if(!remote) return;
+        lastUpdatedAt = res.updated_at || lastUpdatedAt;
+        var before = JSON.stringify(state);
+        var merged = mergeStates(state, remote);
+        state = ensureLists(merged);
+        if(!state.lists[currentList]) currentList = Object.keys(state.lists)[0];
+        saveCache(); refresh();
+        if(JSON.stringify(state) !== JSON.stringify(remote)) scheduleSync();
+      })
+      .catch(function(err){
+        if(err && err.status === 401) showLoginScreen();
+      });
+  }
 
   /* ============ شروع برنامه ============ */
   if(token){ showApp(); loadState(); }
