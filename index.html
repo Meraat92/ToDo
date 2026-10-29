@@ -120,6 +120,7 @@
   .task.done .task-title{text-decoration:line-through; color:var(--muted);}
   .task.dragging{opacity:.4;}
   .task.editing{flex-direction:column; align-items:stretch;}
+  .task.move-open{flex-direction:column; align-items:stretch;}
   .task input[type=checkbox]{width:22px; height:22px; accent-color:var(--green); cursor:pointer; flex-shrink:0;}
   .task input.selcb{accent-color:var(--brand);}
   .task-body{flex:1; min-width:0; cursor:text;}
@@ -138,7 +139,7 @@
   .icon-btn.danger:hover{background:#fecaca;}
   .edit-grid{display:grid; grid-template-columns:2fr 1fr 1fr 1fr auto auto; gap:8px; width:100%;}
   @media(max-width:720px){.edit-grid{grid-template-columns:1fr 1fr;}}
-  .move-strip{display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding-top:10px; border-top:1px dashed var(--line); margin-top:10px; font-size:.8rem; color:var(--muted);}
+  .move-strip{display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding-top:10px; border-top:1px dashed var(--line); margin-top:10px; font-size:.8rem; color:var(--muted); width:100%;}
   .mini-day{padding:5px 12px; border-radius:99px; background:#eef2ff; color:#3730a3; font-size:.8rem; min-height:36px; cursor:pointer; border:1px solid transparent;}
   .mini-day:hover{background:#e0e7ff;}
   .empty{color:var(--muted); text-align:center; padding:26px 0; font-size:.92rem;}
@@ -646,7 +647,7 @@
 
     visible.forEach(function(t){
       var li = document.createElement("li");
-      li.className = "task" + (t.done ? " done" : "");
+      li.className = "task" + (t.done ? " done" : "") + (moveId === t.id ? " move-open" : "");
       li.dataset.tid = t.id;
       li.draggable = !selectMode && editingId !== t.id;
 
