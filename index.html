@@ -8,7 +8,7 @@
 <!-- آیکون زبانهٔ مرورگر -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📋%3C/text%3E%3C/svg%3E">
 <link rel="apple-mobile-web-app-title" content="برنامه هفتگی">
-<!-- جدید: اعمال تم ذخیره‌شده پیش از رندر (جلوگیری از پرش رنگ) -->
+<!-- اعمال تم ذخیره‌شده پیش از رندر (جلوگیری از پرش رنگ) -->
 <script>
 (function(){
   try{
@@ -41,7 +41,7 @@
     --today:#dbeafe; --today-ink:#1d4ed8; --today-line:#93c5fd;
     --hdr1:#2563eb; --hdr2:#4f46e5; --overlay:rgba(15,23,42,.5);
   }
-  /* جدید: حالت تاریک */
+  /* حالت تاریک */
   [data-theme="dark"]{
     color-scheme:dark;
     --bg:#0d1420; --card:#151d2c; --field:#1b2436; --task:#192234; --ink:#e6e9f0; --muted:#9aa3b2;
@@ -62,7 +62,7 @@
   }
   body.bulk-active{padding-bottom:96px;}
   .wrap{max-width:1080px; margin:0 auto;}
-  /* جدید: انتقال نرم هنگام تعویض تم */
+  /* انتقال نرم هنگام تعویض تم */
   body,.card,.task,.chip,.mini-btn,.icon-btn,.mic,input,select,textarea,button{
     transition:background-color .18s, color .18s, border-color .18s, box-shadow .18s;
   }
@@ -72,7 +72,15 @@
     border-radius:18px; padding:26px 28px; margin-bottom:22px;
     box-shadow:0 10px 30px rgba(37,99,235,.25);
   }
-  header h1{font-size:1.55rem; font-weight:700; margin-bottom:6px;}
+  /* ردیف بالای هدر: تیتر سمت راست، دکمهٔ تعویض تم سمت چپ */
+  .hdr-top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
+  .hdr-top h1{font-size:1.55rem; font-weight:700; margin-bottom:6px;}
+  .hdr-top .theme-btn{
+    flex:none; width:44px; height:44px; border-radius:10px; font-size:1.15rem; cursor:pointer;
+    background:rgba(255,255,255,.15); color:#fff; border:1px solid rgba(255,255,255,.4);
+    display:inline-flex; align-items:center; justify-content:center; min-height:44px;
+  }
+  .hdr-top .theme-btn:hover{background:rgba(255,255,255,.28);}
   header p{opacity:.92; font-size:.95rem;}
   header .today{font-size:.85rem; opacity:.85; margin-top:8px;}
 
@@ -211,8 +219,9 @@
     body{padding:14px 10px calc(48px + env(safe-area-inset-bottom));}
     .wrap{max-width:100%;}
     header{padding:20px 18px; border-radius:14px; margin-bottom:16px;}
-    header h1{font-size:1.25rem;}
+    .hdr-top h1{font-size:1.25rem;}
     header p{font-size:.88rem;}
+    .hdr-top .theme-btn{width:40px; height:40px; min-height:40px;}
     .card{padding:16px 14px; margin-bottom:16px; border-radius:14px;}
     .progress-box{gap:10px;}
     .progress-num{flex:1 1 100%; order:1; text-align:center;}
@@ -238,7 +247,7 @@
   }
   @media(max-width:480px){
     .add-form{grid-template-columns:1fr;}
-    header h1{font-size:1.12rem;}
+    .hdr-top h1{font-size:1.12rem;}
     .task-meta{font-size:.75rem;}
   }
 
@@ -280,7 +289,7 @@
 <!-- صفحه ورود -->
 <div id="loginWrap" class="login-wrap" style="display:none">
   <div class="login-card">
-    <!-- جدید: دکمهٔ تعویض تم روی صفحهٔ ورود -->
+    <!-- دکمهٔ تعویض تم روی صفحهٔ ورود -->
     <div style="width:100%; text-align:left;">
       <button type="button" class="mini-btn theme-btn" id="themeBtnLogin" title="تم روشن یا تاریک">🌙</button>
     </div>
@@ -300,7 +309,11 @@
 <div id="mainWrap" class="wrap" style="display:none">
 
   <header>
-    <h1>📅 برنامه و تکالیف هفتگی</h1>
+    <div class="hdr-top">
+      <h1>📅 برنامه و تکالیف هفتگی</h1>
+      <!-- دکمهٔ تعویض تم — بالای صفحه، مقابل تیتر -->
+      <button type="button" class="theme-btn" id="themeBtn" title="تم روشن یا تاریک">🌙</button>
+    </div>
     <p>جدول برنامهٔ درسی و چک‌لیست تکالیف — تغییرات در فضای ابری ذخیره و بین دستگاه‌های شما همگام می‌شوند.</p>
     <div class="today" id="todayLabel"></div>
     <div class="account-row">
@@ -360,7 +373,7 @@
         <button type="button" class="chip" data-filter="today">📅 امروز</button>
         <button type="button" class="chip toggle" id="selectModeBtn">☑ انتخاب چندتایی</button>
         <!-- انتخاب نوع مرتب‌سازی -->
-        <select id="sortSelect" class="sort-sel" title="نوع مرتب‌سازی">
+        <select id="sortSelect" class="sort-sel" title="نوع مرتب‌سازی" style="margin-right:auto;">
           <option value="manual">↕ دستی</option>
           <option value="day">📅 روز هفته</option>
           <option value="priority">🔶 اولویت</option>
@@ -369,8 +382,6 @@
           <option value="newest">🆕 جدیدترین</option>
           <option value="oldest">🕘 قدیمی‌ترین</option>
         </select>
-        <!-- جدید: دکمهٔ تعویض تم (در فضای خالی انتهای ردیف) -->
-        <button type="button" class="mini-btn theme-btn" id="themeBtn" title="تم روشن یا تاریک" style="margin-right:auto;">🌙</button>
       </div>
 
       <ul class="task-list" id="taskList"></ul>
@@ -449,7 +460,7 @@
   var CACHE_KEY    = "todo_cache_v2";
   var COLLAPSE_KEY = "todo_collapsed_v1";
   var SORT_KEY     = "todo_sort_v1";
-  var DARK_KEY     = "todo_dark_v1";   /* جدید: تم روشن/تاریک */
+  var DARK_KEY     = "todo_dark_v1";   /* تم روشن/تاریک */
 
   var DAYS = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه"];
   var P_LABEL = {high:"فوری", mid:"متوسط", low:" کم اهمیت"};
@@ -961,7 +972,7 @@
     if(sortMode === "manual") toast("مرتب‌سازی دستی فعال شد — می‌توانید تکالیف را بکشید و جابجا کنید");
   });
 
-  /* ============ تم روشن/تاریک (جدید) ============ */
+  /* ============ تم روشن/تاریک ============ */
   function isDark(){ return document.documentElement.getAttribute("data-theme") === "dark"; }
   function paintTheme(){
     var txt = isDark() ? "☀️" : "🌙";
