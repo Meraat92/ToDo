@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#2563eb">
 <title>برنامه و تکالیف هفتگی</title>
+<!-- جدید: آیکون زبانهٔ مرورگر -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></link>
+<link rel="apple-mobile-web-app-title" content="برنامه هفتگی">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -109,6 +112,8 @@
   .chip.active{background:var(--brand); color:#fff;}
   .chip.toggle{background:#fef3c7; color:#b45309;}
   .chip.toggle.active{background:var(--amber); color:#fff;}
+  /* جدید: سلکت نوع مرتب‌سازی */
+  .sort-sel{background:var(--chip); color:#3730a3; border:1px solid transparent; border-radius:99px; padding:5px 14px; font-size:.85rem; font-weight:500; min-height:44px; cursor:pointer;}
 
   .task-list{list-style:none; display:flex; flex-direction:column; gap:10px;}
   .task{
@@ -308,6 +313,16 @@
         <button type="button" class="chip" data-filter="done">انجام شده</button>
         <button type="button" class="chip" data-filter="today">📅 امروز</button>
         <button type="button" class="chip toggle" id="selectModeBtn">☑ انتخاب چندتایی</button>
+        <!-- جدید: انتخاب نوع مرتب‌سازی -->
+        <select id="sortSelect" class="sort-sel" title="نوع مرتب‌سازی">
+          <option value="manual">↕ دستی</option>
+          <option value="day">📅 روز هفته</option>
+          <option value="priority">🔶 اولویت</option>
+          <option value="status">✔ انجام‌نشده اول</option>
+          <option value="title">🔤 الفبایی</option>
+          <option value="newest">🆕 جدیدترین</option>
+          <option value="oldest">🕘 قدیمی‌ترین</option>
+        </select>
       </div>
 
       <ul class="task-list" id="taskList"></ul>
@@ -362,7 +377,7 @@
       <div class="msg" id="pwMsg"></div>
       <button class="btn-add" type="submit" id="pwSubmit">تغییر رمز</button>
     </form>
-    <h3>پشتیبان‌ها (۱�۰ نسخهٔ اخیر روی سرور)</h3>
+    <h3>پشتیبان‌ها (۱۰ نسخهٔ اخیر روی سرور)</h3>
     <ul class="blist" id="backupList"><li class="when">در حال بارگذاری…</li></ul>
     <h3>داده‌ها</h3>
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -385,6 +400,7 @@
   var TOKEN_KEY    = "todo_token_v1";
   var CACHE_KEY    = "todo_cache_v2";
   var COLLAPSE_KEY = "todo_collapsed_v1";
+  var SORT_KEY     = "todo_sort_v1";
 
   var DAYS = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه"];
   var P_LABEL = {high:"فوری", mid:"متوسط", low:" کم اهمیت"};
@@ -394,6 +410,7 @@
   var state = { v:2, lists:{}, schedule:{}, order:{}, tomb:[] };
   var currentList = "default";
   var filter = "all";
+  var sortMode = loadLocal(SORT_KEY) || "manual";   /* جدید: نوع مرتب‌سازی */
   var token = localStorage.getItem(TOKEN_KEY) || null;
   var lastUpdatedAt = 0;
   var pollTimer = null, syncTimer = null;
@@ -623,15 +640,34 @@
     if(prev === currentList) { /* noop */ }
   }
 
+  /* جدید: مرتب‌سازی قابل انتخاب — فقط حالت «دستی» از state.order استفاده می‌کند */
   function sortedTasks(){
     var l = listById(currentList);
-    var ord = state.order[currentList] || [];
-    var byId = {};
-    l.tasks.forEach(function(t){ byId[t.id] = t; });
-    var out = [];
-    ord.forEach(function(id){ if(byId[id]){ out.push(byId[id]); delete byId[id]; } });
-    Object.keys(byId).forEach(function(id){ out.push(byId[id]); });
-    return out;
+    var tasks = l.tasks.slice();
+    if(sortMode === "manual"){
+      var ord = state.order[currentList] || [];
+      var byId = {};
+      l.tasks.forEach(function(t){ byId[t.id] = t; });
+      var out = [];
+      ord.forEach(function(id){ if(byId[id]){ out.push(byId[id]); delete byId[id]; } });
+      Object.keys(byId).forEach(function(id){ out.push(byId[id]); });
+      return out;
+    }
+    var dayIdx = {}; DAYS.forEach(function(d, i){ dayIdx[d] = i; });
+    var pr = { high:0, mid:1, low:2 };
+    var cmps = {
+      day: function(a, b){
+        return (dayIdx[a.day] != null ? dayIdx[a.day] : 99) - (dayIdx[b.day] != null ? dayIdx[b.day] : 99)
+          || (a.ts || 0) - (b.ts || 0);
+      },
+      priority: function(a, b){ return pr[a.priority || "mid"] - pr[b.priority || "mid"] || (a.ts || 0) - (b.ts || 0); },
+      status: function(a, b){ return (!!a.done) - (!!b.done) || (a.ts || 0) - (b.ts || 0); },
+      title: function(a, b){ return String(a.title || "").localeCompare(String(b.title || ""), "fa"); },
+      newest: function(a, b){ return (b.ts || 0) - (a.ts || 0); },
+      oldest: function(a, b){ return (a.ts || 0) - (b.ts || 0); }
+    };
+    if(cmps[sortMode]) tasks.sort(cmps[sortMode]);
+    return tasks;
   }
 
   function renderTasks(){
@@ -650,7 +686,7 @@
       var li = document.createElement("li");
       li.className = "task" + (t.done ? " done" : "") + (moveId === t.id ? " move-open" : "");
       li.dataset.tid = t.id;
-      li.draggable = !selectMode && editingId !== t.id;
+      li.draggable = !selectMode && editingId !== t.id && sortMode === "manual";
 
       if(selectMode){
         var sc = document.createElement("input");
@@ -866,6 +902,16 @@
     });
   });
 
+  /* جدید: تغییر نوع مرتب‌سازی */
+  var sortSel = document.getElementById("sortSelect");
+  sortSel.value = sortMode;
+  sortSel.addEventListener("change", function(){
+    sortMode = sortSel.value;
+    try{ localStorage.setItem(SORT_KEY, JSON.stringify(sortMode)); }catch(e){}
+    renderTasks();
+    if(sortMode === "manual") toast("مرتب‌سازی دستی فعال شد — می‌توانید تکالیف را بکشید و جابجا کنید");
+  });
+
   document.getElementById("todayOnlyBtn").addEventListener("click", function(){
     todayOnly = !todayOnly;
     document.getElementById("todayOnlyBtn").classList.toggle("active", todayOnly);
@@ -913,10 +959,6 @@
   document.getElementById("bulkDel").addEventListener("click", function(){
     if(!confirm("تکالیف انتخاب‌شده حذف شوند؟")) return;
     edit(function(){
-      selectedTasks().forEach(function(t){
-        tomb(t.id);
-        if(state.lists[t._lid]){}
-      });
       Object.keys(state.lists).forEach(function(lid){
         state.lists[lid].tasks = state.lists[lid].tasks.filter(function(t){
           if(selected[t.id]){ tomb(t.id); return false; }
@@ -1201,7 +1243,7 @@
       .then(function(res){
         ul.innerHTML = "";
         var rows = (res && res.items) || [];
-        if(!rows.length){ ul.innerHTML = '<li class="when">هنوز پشتیبنی ساخته نشده — با هر ذخیره یک نسخه می‌سازد.</li>'.replace("پشتیبنی","پشتیبان"); return; }
+        if(!rows.length){ ul.innerHTML = '<li class="when">هنوز پشتیبانی ساخته نشده — با هر ذخیره یک نسخه می‌سازد.</li>'; return; }
         rows.forEach(function(r){
           var li = document.createElement("li");
           var when = document.createElement("span");
@@ -1224,7 +1266,7 @@
           ul.appendChild(li);
         });
       })
-      .catch(function(){ ul.innerHTML = '<li class="when">خطا در بارگذاری پشتیban</li>'.replace("پشتیban","پشتیبان‌ها"); });
+      .catch(function(){ ul.innerHTML = '<li class="when">خطا در بارگذاری پشتیبان‌ها</li>'; });
   }
 
   function downloadJson(text, name){
